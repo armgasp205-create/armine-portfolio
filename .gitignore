@@ -7,6 +7,8 @@ Armine Shop_files/
 node_modules/
 react-learning/dist/
 /react-planner/
+/.site-dist/
+/.vercel/
 .env
 .env.*
 !.env.example
