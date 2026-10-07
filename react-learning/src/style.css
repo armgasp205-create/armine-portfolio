@@ -12,6 +12,11 @@ body { background-image:radial-gradient(ellipse at top left, color-mix(in srgb,v
 .expense-details { flex:1; min-width:0; overflow-wrap:anywhere; }
 .expense-details small { display:block; color:var(--muted); }
 .expense-row { flex-wrap:wrap; }
+.budget-panel { padding:22px; margin:24px 0; border:1px solid var(--border); border-radius:18px; background:var(--surface); }
+.budget-panel h2 { margin-top:0; font-size:22px; }
+.budget-result { margin-top:24px; display:grid; gap:10px; }
+.budget-result p { margin:0; }
+.budget-remaining { color:var(--accent); font-weight:bold; }
 button, .app-nav a { transition:background-color .15s, border-color .15s; }
 button:hover:not(:disabled) { border-color:var(--accent); }
 @media(prefers-reduced-motion:reduce) { button, .app-nav a { transition:none; } }

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
+import BudgetPanel from "../components/BudgetPanel.tsx";
 
 interface Expense { id: string; title: string; amount: number; category: string; date: string }
 const categories = ["Սնունդ", "Տրանսպորտ", "Գնումներ", "Այլ"];
@@ -74,6 +75,7 @@ export default function ExpensesPage() {
     {storageError && <p className="error" role="alert">{storageError}</p>}
     <div className="expense-toolbar"><div className="field"><label htmlFor="expense-month">Ամիս (դատարկ՝ ամբողջը)</label><input id="expense-month" type="month" value={month} onChange={event => setMonth(event.target.value)} /></div><button onClick={() => setMonth("")}>Բոլոր ամիսները</button></div>
     <div className="stats-grid"><div className="metric"><span>Ընդհանուր ծախս</span><strong className="expense-total">{money(total)}</strong></div><div className="metric"><span>Գրառումների քանակ</span><strong className="expense-total">{visible.length}</strong></div></div>
+    {month ? <BudgetPanel key={month} month={month} total={total} /> : <p className="page-description">Ընտրիր մեկ ամիս՝ դրա բյուջեն տեսնելու կամ սահմանելու համար։</p>}
     {total > 0 && <div className="category-summary" aria-label="Ծախսերն ըստ կատեգորիայի">{categories.map(item => {
       const subtotal = visible.filter(expense => expense.category === item).reduce((sum, expense) => sum + expense.amount, 0);
       return <div key={item}><div className="category-label"><span>{item}</span><span>{money(subtotal)}</span></div><progress value={subtotal} max={total} aria-label={item} /></div>;
