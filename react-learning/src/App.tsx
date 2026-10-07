@@ -1,16 +1,16 @@
 import React, { useEffect, useRef } from "react";
 import { HashRouter, Link, NavLink, Route, Routes, useLocation } from "react-router";
-import { PlannerProvider, usePlanner } from "./PlannerContext.jsx";
-import TasksPage from "./pages/TasksPage.jsx";
-import StatsPage from "./pages/StatsPage.jsx";
-import ExamplesPage from "./pages/ExamplesPage.jsx";
+import { PlannerProvider, usePlanner } from "./PlannerContext.tsx";
+import TasksPage from "./pages/TasksPage.tsx";
+import StatsPage from "./pages/StatsPage.tsx";
+import ExamplesPage from "./pages/ExamplesPage.tsx";
 
 function Layout() {
   const { theme, toggleTheme, notice } = usePlanner();
   const location = useLocation();
-  const content = useRef(null);
+  const content = useRef<HTMLElement | null>(null);
   useEffect(() => {
-    const titles = { "/": "Իմ առաջադրանքները", "/stats": "Իմ առաջընթացը", "/examples": "Առաջադրանքների օրինակներ" };
+    const titles: Record<string, string> = { "/": "Իմ առաջադրանքները", "/stats": "Իմ առաջընթացը", "/examples": "Առաջադրանքների օրինակներ" };
     document.title = (titles[location.pathname] || "Էջը չի գտնվել") + " | React պլանավորիչ";
     content.current?.focus({ preventScroll: true });
     window.scrollTo(0, 0);

@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
         dashboard: { title: "Admin Dashboard", description: "Демо dashboard: фильтрация за 7/30/90 дней, пересчёт диаграммы и показателей, список заказов и экспорт CSV.", tech: ["HTML", "CSS", "JavaScript"], url: "dashboard.html", caseStudy: "case-study.html?project=dashboard" },
         weather: { title: "Приложение погоды", description: "Погода с поиском города, текущими показателями и пятидневным прогнозом из Open-Meteo API.", tech: ["HTML", "CSS", "JavaScript", "API"], url: "weather.html", caseStudy: "case-study.html?project=weather" },
         music: { title: "Музыкальный плеер", description: "Web Audio плеер: три синтезированные мелодии, настоящая пауза и продолжение, перемотка и регулировка громкости.", tech: ["HTML", "CSS", "JavaScript", "Web Audio"], url: "music.html", caseStudy: "case-study.html?project=music" },
-        planner: { title: "Планировщик задач на React", description: "React-планировщик с тремя страницами, приоритетами, сроками, поиском, сменой темы и импортом примеров из API.", tech: ["React", "JavaScript", "CSS", "Vite"], url: "react-planner/", caseStudy: "case-study.html?project=planner" }
+        planner: { title: "Планировщик задач на React", description: "React-планировщик с тремя страницами, приоритетами, сроками, поиском, сменой темы и импортом примеров из API.", tech: ["React", "TypeScript", "React Router", "CSS", "Vite"], url: "react-planner/", caseStudy: "case-study.html?project=planner" }
     };
 
     let heroTypingTimer;

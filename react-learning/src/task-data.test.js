@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { normalizeTasks, importTask, fetchExampleTasks } from "./task-data.js";
+import { normalizeTasks, importTask, fetchExampleTasks } from "./task-data.ts";
 
 test("existing saved tasks migrate without losing completion state", () => {
   assert.deepEqual(normalizeTasks([{ id: "old", text: "Learn React", done: true }]), [{ id: "old", text: "Learn React", done: true, priority: "medium", due: "" }]);

@@ -1,5 +1,5 @@
 import React from "react";
-import { usePlanner } from "../PlannerContext.jsx";
+import { usePlanner } from "../PlannerContext.tsx";
 
 export default function StatsPage() {
   const { tasks } = usePlanner();
