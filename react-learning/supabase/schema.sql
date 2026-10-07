@@ -8,6 +8,9 @@ create table if not exists public.planner_snapshots (
 alter table public.planner_snapshots enable row level security;
 revoke all on public.planner_snapshots from anon, authenticated;
 grant select, insert, update on public.planner_snapshots to authenticated;
+drop policy if exists "Read own planner" on public.planner_snapshots;
+drop policy if exists "Insert own planner" on public.planner_snapshots;
+drop policy if exists "Update own planner" on public.planner_snapshots;
 create policy "Read own planner" on public.planner_snapshots for select to authenticated using ((select auth.uid()) = user_id);
 create policy "Insert own planner" on public.planner_snapshots for insert to authenticated with check ((select auth.uid()) = user_id);
 create policy "Update own planner" on public.planner_snapshots for update to authenticated using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);

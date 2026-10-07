@@ -8,7 +8,7 @@
 2. Նախագծի SQL Editor-ում գործարկիր `supabase/schema.sql` ֆայլի ամբողջ պարունակությունը մեկ անգամ։
 3. Authentication-ի URL Configuration-ում Site URL-ը սահմանիր `https://armine-web.netlify.app/react-planner/`։ Redirect URLs-ում ավելացրու նույն հասցեն և տեղային փորձարկման համար `http://localhost:5173/`։ Հաստատման հղումից հետո կարող ես բացել «Իմ հաշիվը» էջը։
 4. Նախագծի Connect պատուհանից կամ API կարգավորումներից վերցրու Project URL-ն ու **publishable key**-ը։ Գաղտնի բանալի պետք չէ։
-5. Netlify նախագծի environment variables-ում ավելացրու `VITE_SUPABASE_URL` և `VITE_SUPABASE_PUBLISHABLE_KEY`, ապա նոր deploy արա։ Vite-ը կարդում է դրանք build-ի ընթացքում։
+5. Այս նախագծի հրապարակային URL-ն ու publishable key-ն արդեն ավելացված են արմատային `netlify.toml`-ում՝ որպես `VITE_SUPABASE_URL` և `VITE_SUPABASE_PUBLISHABLE_KEY`։ GitHub-ի push-ից հետո Netlify-ն դրանք կկարդա build-ի ընթացքում։ Գաղտնի բանալիներ այս ֆայլում մի պահիր։
 6. Տեղային փորձարկման համար պատճենիր `.env.example`-ը `.env.local` անունով, լրացրու արժեքները և վերագործարկիր dev server-ը։ `.env.local`-ը Git-ում չի պահվում։
 
 ## Ինչպես է աշխատում

@@ -4,3 +4,6 @@
 
 [build.environment]
   NODE_VERSION = "24"
+  # Public browser configuration; no secret/service-role keys belong here.
+  VITE_SUPABASE_URL = "https://yumachbfwrxdoypfvyhg.supabase.co"
+  VITE_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_Q2MVHes5TW-J15XHUvPYsw_Ce5WsxYc"
