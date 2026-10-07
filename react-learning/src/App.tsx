@@ -19,7 +19,7 @@ function Layout() {
     window.scrollTo(0, 0);
   }, [location.pathname]);
   return <div className="app-shell">
-    <header className="app-header"><a className="back-link" href="/index.html#projects">← Պորտֆոլիո</a><button onClick={toggleTheme} aria-pressed={theme === "light"}>{theme === "dark" ? "☀ Բաց թեմա" : "☾ Մուգ թեմա"}</button></header>
+    <header className="app-header"><a className="back-link" href="../index.html#projects">← Պորտֆոլիո</a><button onClick={toggleTheme} aria-pressed={theme === "light"}>{theme === "dark" ? "☀ Բաց թեմա" : "☾ Մուգ թեմա"}</button></header>
     <p className="eyebrow">REACT + TYPESCRIPT · ԻՄ ՕՐԸ</p>
     <nav className="app-nav" aria-label="Պլանավորիչի էջեր"><NavLink to="/" end>Առաջադրանքներ</NavLink><NavLink to="/stats">Առաջընթաց</NavLink><NavLink to="/expenses">Ծախսեր</NavLink><NavLink to="/examples">API օրինակներ</NavLink><NavLink to="/account">Իմ հաշիվը</NavLink></nav>
     <main ref={content} tabIndex={-1}>
