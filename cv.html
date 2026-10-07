@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Արմինե Գասպարյան․ սկսնակ Front-End ծրագրավորողի CV, կրթություն, հմտություններ և ուսումնական նախագծեր։">
+  <title>Արմինե Գասպարյան — CV</title>
+  <link rel="stylesheet" href="cv.css">
+  <script src="cv.js" defer></script>
+</head>
+<body>
+  <nav class="cv-actions" aria-label="CV-ի գործողություններ">
+    <a href="index.html">← Պորտֆոլիո</a>
+    <button id="print-cv" type="button">Տպել / Պահպանել PDF</button>
+  </nav>
+  <main class="cv-sheet">
+    <header>
+      <p class="eyebrow">CURRICULUM VITAE</p>
+      <h1>Արմինե Գասպարյան</h1>
+      <p class="role">Սկսնակ Front-End ծրագրավորող</p>
+      <div class="contact-links">
+        <a href="mailto:armine.gasparyan94@mail.ru">armine.gasparyan94@mail.ru</a>
+        <a href="https://github.com/armgasp205-create">GitHub · armgasp205-create</a>
+        <a href="index.html#projects">Պորտֆոլիո · նախագծեր</a>
+      </div>
+    </header>
+    <section aria-labelledby="profile-heading">
+      <h2 id="profile-heading">Իմ մասին</h2>
+      <p>Տեղեկատվական տեխնոլոգիաների մագիստրոս եմ և զարգացնում եմ Front-End ծրագրավորման հմտություններս։ Ուսումնական նախագծերում կիրառել եմ HTML, CSS, JavaScript, React և TypeScript։ Կառուցել եմ responsive էջեր, ինտերակտիվ ձևեր, որոնում ու զտիչներ, API-ից տվյալների բեռնում և բրաուզերում պահպանում։ Փնտրում եմ սկսնակ Front-End ծրագրավորողի կամ պրակտիկանտի հնարավորություն։</p>
+    </section>
+    <section aria-labelledby="education-heading">
+      <h2 id="education-heading">Կրթություն</h2>
+      <h3>Հայաստանի ազգային պոլիտեխնիկական համալսարան, Գյումրու մասնաճյուղ</h3>
+      <p>Տեղեկատվական տեխնոլոգիաներ · Մագիստրոսի աստիճան<br>Ավարտել եմ՝ <strong>2018 թ.</strong></p>
+    </section>
+    <section aria-labelledby="skills-heading">
+      <h2 id="skills-heading">Հմտություններ</h2>
+      <p class="muted">Կիրառված են ուսումնական նախագծերում։</p>
+      <ul>
+        <li><strong>HTML, CSS</strong>՝ էջերի կառուցվածք, ձևեր, Flexbox/Grid, responsive դասավորություն, media queries և թեմաներ։</li>
+        <li><strong>JavaScript</strong>՝ DOM, իրադարձություններ, ֆունկցիաներ, զանգվածներ, օբյեկտներ, որոնում, զտում և հաշվարկներ։</li>
+        <li><strong>API և պահպանում</strong>՝ fetch, async/await, JSON, localStorage, բեռնման ու սխալի վիճակներ։</li>
+        <li><strong>React</strong>՝ components, props, useState, useEffect, Context, React Router և կառավարվող ձևեր։</li>
+        <li><strong>TypeScript</strong>՝ տվյալների տիպեր, interfaces, union types և React բաղադրիչների տիպավորում։</li>
+        <li><strong>Գործիքներ</strong>՝ VS Code, Git, GitHub, npm, Vite, Netlify։</li>
+      </ul>
+      <p class="muted">Շարունակում եմ խորացնել React/TypeScript-ը, debugging-ը, մատչելիությունը, թեստավորումը և տվյալների բազաների հետ աշխատանքը։</p>
+    </section>
+    <section aria-labelledby="projects-heading">
+      <h2 id="projects-heading">Ուսումնական նախագծեր</h2>
+      <article><h3><a href="shop.html">Modern Shop</a></h3><p>Ապրանքների որոնում, զտում, դասավորում, զամբյուղի քանակի կառավարում, գումարի հաշվարկ և տեղային պահպանում։ HTML, CSS, JavaScript։ Վճարման համակարգ չի ներառում։</p></article>
+      <article><h3><a href="dashboard.html">Admin Dashboard</a></h3><p>Պատվերների զտում ըստ ժամանակահատվածի ու կարգավիճակի, ցուցանիշների և գրաֆիկի վերահաշվարկ, CSV արտահանում։ HTML, CSS, JavaScript։ Օգտագործում է ցուցադրական տվյալներ։</p></article>
+      <article><h3><a href="weather.html">Weather App</a></h3><p>Քաղաքի որոնում, ընթացիկ եղանակ և հնգօրյա կանխատեսում Open-Meteo API-ից։ Բեռնման և սխալի վիճակներ, հին հարցումների չեղարկում։ HTML, CSS, JavaScript։</p></article>
+      <article><h3><a href="music.html">Music Player</a></h3><p>Երեք սինթեզված մեղեդի, pause/resume, ձայնի տեղափոխում, մեղեդու ընտրություն և ուժգնության կառավարում։ HTML, CSS, JavaScript, Web Audio API։</p></article>
+      <article><h3><a href="react-planner/">Իմ օրը — React + TypeScript</a></h3><p>Առաջադրանքներ, որոնում, զտիչներ, առաջընթաց, ծախսերի խմբագրում, ամսական բյուջե և մնացորդ։ React, TypeScript, Context, React Router, Vite, localStorage։ Supabase-ի ինտեգրումը վերջնական փորձարկման փուլում է։</p></article>
+      <p><a href="https://github.com/armgasp205-create/armine-portfolio">Դիտել նախագծերի կոդը GitHub-ում →</a></p>
+    </section>
+    <section aria-labelledby="languages-heading">
+      <h2 id="languages-heading">Լեզուներ</h2>
+      <ul class="languages"><li><strong>Հայերեն</strong>՝ մայրենի</li><li><strong>Ռուսերեն</strong>՝ գերազանց</li><li><strong>Անգլերեն</strong>՝ լավ</li></ul>
+    </section>
+  </main>
+</body>
+</html>

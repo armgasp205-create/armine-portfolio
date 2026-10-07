@@ -196,6 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
             label.textContent = contactLabels[language][index];
         });
         const caseLabel = { hy: "Նախագծի մանրամասները →", ru: "Подробнее о проекте →", en: "Project details →" };
+        setText("#cv-link", { hy: "Դիտել CV-ն", ru: "Посмотреть CV", en: "View CV" }[language]);
         document.querySelectorAll(".case-study-button").forEach(link => link.textContent = caseLabel[language]);
         setProcessLanguage(language);
         animateHero(language);
