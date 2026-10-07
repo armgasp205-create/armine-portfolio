@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 
 interface Expense { id: string; title: string; amount: number; category: string; date: string }
 const categories = ["Սնունդ", "Տրանսպորտ", "Գնումներ", "Այլ"];
@@ -28,6 +28,16 @@ export default function ExpensesPage() {
   const [month, setMonth] = useState(() => today().slice(0, 7));
   const [error, setError] = useState("");
   const [storageError, setStorageError] = useState("");
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const titleInput = useRef<HTMLInputElement>(null);
+  function resetForm() {
+    setEditingId(null); setTitle(""); setAmount(""); setCategory(categories[0]); setDate(today()); setError("");
+  }
+  function editExpense(expense: Expense) {
+    setEditingId(expense.id); setTitle(expense.title); setAmount(String(expense.amount / 100));
+    setCategory(expense.category); setDate(expense.date); setError("");
+    titleInput.current?.focus();
+  }
   useEffect(() => {
     try { localStorage.setItem(storageKey, JSON.stringify(expenses)); setStorageError(""); }
     catch { setStorageError("Չհաջողվեց պահպանել տվյալները։ Մի փակիր էջը՝ մինչև դրանք գրանցես այլ տեղ։"); }
@@ -41,19 +51,24 @@ export default function ExpensesPage() {
     if (!title.trim() || !Number.isFinite(value) || !Number.isSafeInteger(cents) || cents <= 0 || cents > 100000000000 || !date) {
       setError("Լրացրու անվանումը, ամսաթիվը և դրական գումար՝ առավելագույնը 1 միլիարդ դրամ։"); return;
     }
-    if (expenses.length >= 1000) { setError("Հասել ես 1000 գրառման սահմանին։ Ջնջիր ավելորդ գրառումները։"); return; }
-    setExpenses(previous => [{ id: crypto.randomUUID(), title: title.trim(), amount: cents, category, date }, ...previous]);
-    setMonth(date.slice(0, 7)); setTitle(""); setAmount(""); setError("");
+    if (!editingId && expenses.length >= 1000) { setError("Հասել ես 1000 գրառման սահմանին։ Ջնջիր ավելորդ գրառումները։"); return; }
+    const updated: Expense = { id: editingId ?? crypto.randomUUID(), title: title.trim(), amount: cents, category, date };
+    setExpenses(previous => editingId
+      ? previous.map(expense => expense.id === editingId ? updated : expense)
+      : [updated, ...previous]);
+    setMonth(date.slice(0, 7)); resetForm();
   }
   return <section>
     <h1>Իմ ծախսերը</h1>
     <p className="page-description">Գրանցիր առօրյա ծախսերը և տես՝ որտեղ է գնում քո գումարը։ Տվյալները պահվում են այս բրաուզերում։</p>
     <form className="task-form" onSubmit={addExpense}>
-      <div className="field task-text-field"><label htmlFor="expense-title">Ինչի՞ համար ես ծախսել</label><input id="expense-title" value={title} onChange={event => setTitle(event.target.value)} maxLength={120} required placeholder="Օրինակ՝ սուրճ" /></div>
+      {editingId && <p role="status">Խմբագրում ես ընտրված ծախսը։</p>}
+      <div className="field task-text-field"><label htmlFor="expense-title">Ինչի՞ համար ես ծախսել</label><input ref={titleInput} id="expense-title" value={title} onChange={event => setTitle(event.target.value)} maxLength={120} required placeholder="Օրինակ՝ սուրճ" /></div>
       <div className="field"><label htmlFor="expense-amount">Գումար (դրամ)</label><input id="expense-amount" type="number" min="0.01" max="1000000000" step="0.01" value={amount} onChange={event => setAmount(event.target.value)} required /></div>
       <div className="field"><label htmlFor="expense-category">Կատեգորիա</label><select id="expense-category" value={category} onChange={event => setCategory(event.target.value)}>{categories.map(item => <option key={item}>{item}</option>)}</select></div>
       <div className="field"><label htmlFor="expense-date">Ամսաթիվ</label><input id="expense-date" type="date" value={date} onChange={event => setDate(event.target.value)} required /></div>
-      <button className="primary" type="submit">Ավելացնել ծախսը</button>
+      <button className="primary" type="submit">{editingId ? "Պահպանել փոփոխությունները" : "Ավելացնել ծախսը"}</button>
+      {editingId && <button type="button" onClick={resetForm}>Չեղարկել</button>}
       {error && <p className="error" role="alert">{error}</p>}
     </form>
     {storageError && <p className="error" role="alert">{storageError}</p>}
@@ -63,6 +78,9 @@ export default function ExpensesPage() {
       const subtotal = visible.filter(expense => expense.category === item).reduce((sum, expense) => sum + expense.amount, 0);
       return <div key={item}><div className="category-label"><span>{item}</span><span>{money(subtotal)}</span></div><progress value={subtotal} max={total} aria-label={item} /></div>;
     })}</div>}
-    {visible.length === 0 ? <p className="empty">Այս ժամանակահատվածում ծախսեր չկան։ Ավելացրու առաջինը։</p> : <ul>{visible.map(expense => <li key={expense.id} className="expense-row"><div className="expense-details"><strong>{expense.title}</strong><small>{expense.category} · {expense.date}</small></div><strong>{money(expense.amount)}</strong><button aria-label={`Ջնջել՝ ${expense.title}`} onClick={() => setExpenses(previous => previous.filter(item => item.id !== expense.id))}>Ջնջել</button></li>)}</ul>}
+    {visible.length === 0 ? <p className="empty">Այս ժամանակահատվածում ծախսեր չկան։ Ավելացրու առաջինը։</p> : <ul>{visible.map(expense => <li key={expense.id} className="expense-row"><div className="expense-details"><strong>{expense.title}</strong><small>{expense.category} · {expense.date}</small></div><strong>{money(expense.amount)}</strong><button aria-label={`Խմբագրել՝ ${expense.title}`} onClick={() => editExpense(expense)}>Խմբագրել</button><button aria-label={`Ջնջել՝ ${expense.title}`} onClick={() => {
+      setExpenses(previous => previous.filter(item => item.id !== expense.id));
+      if (editingId === expense.id) resetForm();
+    }}>Ջնջել</button></li>)}</ul>}
   </section>;
 }
