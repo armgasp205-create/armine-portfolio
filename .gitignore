@@ -5,6 +5,8 @@ Armine Shop_files/
 # Local tooling and credentials
 .netlify/
 node_modules/
+react-learning/dist/
+/react-planner/
 .env
 .env.*
 !.env.example

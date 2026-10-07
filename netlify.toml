@@ -1,0 +1,6 @@
+[build]
+  command = "npm --prefix react-learning ci && npm --prefix react-learning run build:portfolio"
+  publish = "."
+
+[build.environment]
+  NODE_VERSION = "24"

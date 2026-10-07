@@ -2229,3 +2229,10 @@ body.light-mode .nav-links a[aria-current="location"] { color: #6d28d9; }
 .project-info .project-button { align-self: flex-start; }
 .project-info .case-study-button { align-self: flex-start; margin-left: 0; margin-top: 14px; }
 @media (max-width: 520px) { .project-info .project-button { align-self: stretch; min-height: 44px; } .case-study-button { min-height: 44px; display: inline-flex; align-items: center; } }
+.planner-preview { background: linear-gradient(135deg, #10243b, #251b48); padding: 44px 28px; display: flex; flex-direction: column; justify-content: center; gap: 18px; }
+.planner-preview-label { color: #67e8f9; font-size: 12px; letter-spacing: 2px; }
+.planner-preview-row { display: flex; gap: 12px; align-items: center; color: #f8fafc; font-weight: 600; }
+.planner-preview-row > span:first-child { background: #67e8f9; color: #082f49; border-radius: 8px; padding: 2px 9px; }
+.planner-preview-line { height: 10px; border-radius: 8px; background: rgba(148,163,184,.3); width: 90%; }
+.planner-preview-line.short { width: 65%; }
+.planner-preview-progress { height: 7px; width: 100%; background: linear-gradient(to right, #67e8f9 60%, rgba(148,163,184,.2) 60%); border-radius: 8px; }
