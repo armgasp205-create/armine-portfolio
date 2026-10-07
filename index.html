@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="hy">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Armine's Front-End developer portfolio - projects built with HTML, CSS, and JavaScript.">
+    <meta name="theme-color" content="#080a12">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Armine | Front-End Developer">
+    <meta property="og:description" content="Explore projects, skills, and contact information.">
+    <meta property="og:image" content="hero.png">
+
+    <title>Պորտֆոլիո | Front-End ծրագրավորող</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="playground.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Անցնել բովանդակությանը</a>
+
+    <div id="scroll-progress" class="scroll-progress" aria-hidden="true"></div>
+
+    <button id="back-to-top" class="back-to-top" type="button" aria-label="Back to top">
+        ↑
+    </button>
+
+    <!-- NAVBAR -->
+
+    <header class="navbar">
+
+        <div class="nav-container">
+
+            <a href="#home" class="logo">
+                ՊՈՐՏՖՈԼԻՈ
+            </a>
+
+            <nav id="site-navigation" class="nav-links">
+
+                <a href="#home">Գլխավոր</a>
+                <a href="#about">Իմ մասին</a>
+                <a href="#skills">Հմտություններ</a>
+                <a href="#projects">Նախագծեր</a>
+                <a href="#contact">Կապ</a>
+
+            </nav>
+
+            <button id="menu-toggle" class="menu-toggle" type="button" aria-label="Open navigation menu" aria-controls="site-navigation" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="language-switcher" aria-label="Language selector">
+                <button class="language-button" type="button" data-language="hy">ՀԱՅ</button>
+                <button class="language-button" type="button" data-language="ru">RU</button>
+                <button class="language-button" type="button" data-language="en">EN</button>
+            </div>
+
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false">
+                🌙
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <main id="main-content" tabindex="-1">
+    <!-- HERO -->
+
+    <section id="home" class="hero">
+
+        <div class="hero-image">
+
+            <img
+                src="hero.png"
+                alt="Portrait of Armine"
+            >
+
+        </div>
+
+
+        <div class="hero-content">
+
+            <span class="hero-label">
+                FRONT-END ԾՐԱԳՐԱՎՈՐՈՂ
+            </span>
+
+            <h1>
+                Front-End <span>ծրագրավորող</span>
+            </h1>
+
+            <p>
+                Ես ստեղծում եմ ժամանակակից, արձագանքող և
+                օգտագործողի համար հարմար կայքեր՝
+                HTML, CSS և JavaScript տեխնոլոգիաներով։
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="#projects" class="btn primary">
+                    Դիտել նախագծերը
+                </a>
+
+                <a href="#contact" class="btn secondary">
+                    Կապ հաստատել
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="stats-section" aria-label="Portfolio highlights">
+        <div class="stats-grid">
+            <article class="stat-card">
+                <span class="stat-number" data-target="4">0</span>
+                <span class="stat-label">Projects built</span>
+            </article>
+            <article class="stat-card">
+                <span class="stat-number" data-target="3">0</span>
+                <span class="stat-label">Core skills</span>
+            </article>
+            <article class="stat-card">
+                <span class="stat-number" data-target="3" data-suffix="">0</span>
+                <span class="stat-label">Interface languages</span>
+            </article>
+        </div>
+    </section>
+
+
+    <!-- ABOUT -->
+
+    <section id="about" class="section">
+
+        <div class="section-title">
+
+            <span>
+                ԻՄ ՄԱՍԻՆ
+            </span>
+
+            <h2>
+                Ո՞վ եմ ես
+            </h2>
+
+        </div>
+
+        <div class="about-content">
+
+            <div class="about-text">
+
+                <p>
+                    Ես սկսնակ Front-End ծրագրավորող եմ,
+                    ով հետաքրքրված է գեղեցիկ և ֆունկցիոնալ
+                    կայքեր ստեղծելով։
+                </p>
+
+                <p>
+                    Ես սիրում եմ սովորել նոր տեխնոլոգիաներ
+                    և ստեղծել իրական նախագծեր՝
+                    ծրագրավորման հմտություններս զարգացնելու համար։
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SKILLS -->
+
+    <section id="skills" class="section skills-section">
+
+        <div class="section-title">
+
+            <span>
+                ԻՄ ՀՄՏՈՒԹՅՈՒՆՆԵՐԸ
+            </span>
+
+            <h2>
+                Տեխնոլոգիաներ
+            </h2>
+
+        </div>
+
+
+        <div class="skills-grid">
+
+            <!-- HTML -->
+
+            <div class="skill-card">
+
+                <div class="skill-icon">
+                    HTML
+                </div>
+
+                <h3>
+                    HTML5
+                </h3>
+
+                <p>
+                    Կայքերի կառուցվածքի և բովանդակության ստեղծում։
+                </p>
+
+            </div>
+
+
+            <!-- CSS -->
+
+            <div class="skill-card">
+
+                <div class="skill-icon">
+                    CSS
+                </div>
+
+                <h3>
+                    CSS3
+                </h3>
+
+                <p>
+                    Արձագանքող դասավորություն և ժամանակակից դիզայն։
+                </p>
+
+            </div>
+
+
+            <!-- JAVASCRIPT -->
+
+            <div class="skill-card">
+
+                <div class="skill-icon">
+                    JS
+                </div>
+
+                <h3>
+                    JavaScript
+                </h3>
+
+                <p>
+                    Ինտերակտիվ և դինամիկ կայքերի ստեղծում։
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- PROCESS -->
+
+    <section id="process" class="section process-section">
+        <div class="section-title">
+            <span>ԱՇԽԱՏԱՆՔ</span>
+            <h2 id="process-title">Ինչպես եմ աշխատում</h2>
+        </div>
+
+        <div class="process-grid">
+            <article class="process-card">
+                <span class="process-step">01</span>
+                <div class="process-icon">✦</div>
+                <h3>Բացահայտում</h3>
+                <p>Սահմանում ենք կայքի նպատակը, լսարանը և հիմնական հնարավորությունները։</p>
+            </article>
+            <article class="process-card">
+                <span class="process-step">02</span>
+                <div class="process-icon">◈</div>
+                <h3>Դիզայն</h3>
+                <p>Ստեղծում եմ մաքուր, արձագանքող միջերես բոլոր էկրանների համար։</p>
+            </article>
+            <article class="process-card">
+                <span class="process-step">03</span>
+                <div class="process-icon">↗</div>
+                <h3>Կառուցում</h3>
+                <p>Դիզայնը վերածում եմ արագ, ինտերակտիվ և վարպետացված կայքի։</p>
+            </article>
+        </div>
+    </section>
+
+
+    <!-- PROJECTS -->
+
+    <section id="projects" class="section projects-section">
+
+        <div class="section-title">
+
+            <span>
+                ԻՄ ԱՇԽԱՏԱՆՔՆԵՐԸ
+            </span>
+
+            <h2>
+                Նախագծեր
+            </h2>
+
+        </div>
+
+        <div class="project-toolbar" aria-label="Project filters">
+            <div class="project-filters" role="group" aria-label="Filter projects">
+                <button class="filter-button active" type="button" data-filter="all">Բոլորը</button>
+                <button class="filter-button" type="button" data-filter="commerce">Խանութ</button>
+                <button class="filter-button" type="button" data-filter="tool">Գործիքներ</button>
+                <button class="filter-button" type="button" data-filter="creative">Ստեղծագործական</button>
+                <button class="filter-button saved-filter" type="button" data-filter="saved">Պահված ♥</button>
+            </div>
+            <label class="project-search">
+                <span class="sr-only">Որոնել նախագծեր</span>
+                <input id="project-search" type="search" placeholder="Որոնել նախագծեր..." autocomplete="off">
+            </label>
+            <p class="project-count" aria-live="polite"><span id="visible-project-count">4</span> նախագծեր</p>
+        </div>
+
+        <div class="projects-grid">
+
+
+            <!-- PROJECT 01 -->
+
+            <article class="project-card" data-category="commerce">
+
+                <button class="project-save" type="button" aria-label="Save Modern Shop" aria-pressed="false" data-project-id="shop">♡</button>
+
+                <div class="project-preview shop-preview" data-project="shop">
+
+                    <div class="preview-header">
+                        MODERN SHOP
+                    </div>
+
+                    <div class="preview-products">
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="project-info">
+
+                    <span class="project-number">
+                        ՆԱԽԱԳԻԾ 01
+                    </span>
+
+                    <h3>
+                        Օնլայն խանութ — Modern Shop
+                    </h3>
+
+                    <p>Ուսումնական խանութ՝ ապրանքների որոնմամբ, կատեգորիաների զտմամբ և զամբյուղով՝ քանակի փոփոխություն, գումարի հաշվարկ ու պահպանում localStorage-ում։</p>
+
+                    <div class="project-tags">
+
+                        <span>HTML</span>
+                        <span>CSS</span>
+                        <span>JavaScript</span>
+
+                    </div>
+
+                    <a class="project-button" href="shop.html">Դիտել նախագիծը →</a>
+                    <a class="case-study-button" href="case-study.html?project=shop">Case study →</a>
+
+                </div>
+
+            </article>
+
+
+            <!-- PROJECT 02 -->
+
+            <article class="project-card" data-category="tool">
+
+                <button class="project-save" type="button" aria-label="Save Admin Dashboard" aria-pressed="false" data-project-id="dashboard">♡</button>
+
+                <div class="project-preview dashboard-preview" data-project="dashboard">
+
+                    <div class="preview-header">
+                        ADMIN DASHBOARD
+                    </div>
+
+                    <div class="dashboard-preview-content">
+
+                        <div class="dashboard-box"></div>
+                        <div class="dashboard-box"></div>
+                        <div class="dashboard-box"></div>
+
+                        <div class="dashboard-chart"></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="project-info">
+
+                    <span class="project-number">
+                        ՆԱԽԱԳԻԾ 02
+                    </span>
+
+                    <h3>
+                        Կառավարման վահանակ
+                    </h3>
+
+                    <p>Ցուցադրական dashboard՝ 7/30/90 օրվա զտմամբ, վերահաշվարկվող գրաֆիկով ու ցուցանիշներով, պատվերների ցանկով և CSV ներբեռնմամբ։</p>
+
+                    <div class="project-tags">
+
+                        <span>HTML</span>
+                        <span>CSS</span>
+                        <span>JavaScript</span>
+
+                    </div>
+
+                    <a class="project-button" href="dashboard.html">Դիտել նախագիծը →</a>
+                    <a class="case-study-button" href="case-study.html?project=dashboard">Case study →</a>
+
+                </div>
+
+            </article>
+
+
+            <!-- PROJECT 03 -->
+
+            <article class="project-card" data-category="tool">
+
+                <button class="project-save" type="button" aria-label="Save Weather App" aria-pressed="false" data-project-id="weather">♡</button>
+
+                <div class="project-preview weather-preview" data-project="weather">
+
+                    <div class="weather-preview-icon">
+                        🌤️
+                    </div>
+
+                    <div class="weather-preview-temp">
+                        24°C
+                    </div>
+
+                    <div class="weather-preview-city">
+                        Երևան
+                    </div>
+
+                </div>
+
+
+                <div class="project-info">
+
+                    <span class="project-number">
+                        ՆԱԽԱԳԻԾ 03
+                    </span>
+
+                    <h3>
+                        Եղանակի հավելված
+                    </h3>
+
+                    <p>Եղանակի հավելված՝ քաղաքների որոնմամբ, ընթացիկ տվյալներով և հնգօրյա կանխատեսմամբ՝ Open-Meteo API-ից։</p>
+
+                    <div class="project-tags">
+
+                        <span>HTML</span>
+                        <span>CSS</span>
+                        <span>JavaScript</span>
+
+                    </div>
+
+                    <a class="project-button" href="weather.html">Դիտել նախագիծը →</a>
+                    <a class="case-study-button" href="case-study.html?project=weather">Case study →</a>
+
+                </div>
+
+            </article>
+
+
+            <!-- PROJECT 04 -->
+
+            <article class="project-card" data-category="creative">
+
+                <button class="project-save" type="button" aria-label="Save Music Player" aria-pressed="false" data-project-id="music">♡</button>
+
+                <div class="project-preview music-preview" data-project="music">
+
+                    <div class="music-preview-cover">
+                        ♫
+                    </div>
+
+                    <div class="music-preview-title">
+                        Midnight Dreams
+                    </div>
+
+                    <div class="music-preview-artist">
+                        Demo Artist
+                    </div>
+
+                    <div class="music-preview-progress"></div>
+
+                    <div class="music-preview-controls">
+                        <span>⏮</span>
+                        <span class="music-play">▶</span>
+                        <span>⏭</span>
+                    </div>
+
+                </div>
+
+
+                <div class="project-info">
+
+                    <span class="project-number">
+                        ՆԱԽԱԳԻԾ 04
+                    </span>
+
+                    <h3>
+                        Երաժշտական նվագարկիչ
+                    </h3>
+
+                    <p>Web Audio նվագարկիչ՝ երեք սինթեզված մեղեդով, իրական pause/resume-ով, ձայնի տեղափոխմամբ և ուժգնության կառավարմամբ։</p>
+
+                    <div class="project-tags">
+
+                        <span>HTML</span>
+                        <span>CSS</span>
+                        <span>JavaScript</span>
+
+                    </div>
+
+                    <a class="project-button" href="music.html">Դիտել նախագիծը →</a>
+                    <a class="case-study-button" href="case-study.html?project=music">Case study →</a>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+        <p id="no-projects" class="no-projects" hidden>Այս ֆիլտրին համապատասխանող նախագիծ չկա։</p>
+
+    </section>
+
+
+    <section id="js-playground" class="section">
+        <div class="playground-heading">
+            <span>JAVASCRIPT PLAYGROUND</span>
+            <h2>Փորձիր JavaScript-ը գործի մեջ</h2>
+            <p class="playground-intro">Ավելացրու քո առաջադրանքները, նշիր ավարտվածները և հետևիր առաջընթացին։ Ցանկը պահպանվում է այս բրաուզերում։</p>
+        </div>
+        <div class="playground-panel">
+            <form class="playground-form">
+                <input type="text" maxlength="120" required aria-label="Նոր առաջադրանք" placeholder="Օրինակ՝ ստեղծել responsive էջ">
+                <button class="playground-add" type="submit">Ավելացնել</button>
+            </form>
+            <div class="playground-filters">
+                <button type="button" data-task-filter="all" aria-pressed="true">Բոլորը</button>
+                <button type="button" data-task-filter="active" aria-pressed="false">Ընթացիկ</button>
+                <button type="button" data-task-filter="done" aria-pressed="false">Ավարտված</button>
+            </div>
+            <p class="playground-summary" aria-live="polite">0 / 0 ավարտված</p>
+            <progress max="100" value="0" aria-label="ավարտված"></progress>
+            <ul class="playground-list"></ul>
+            <p class="playground-empty">Այս ցանկում առաջադրանքներ չկան։</p>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+
+    <section id="contact" class="section contact-section">
+
+        <div class="section-title">
+
+            <span>
+                ԿԱՊ
+            </span>
+
+            <h2>
+                Եկեք միասին աշխատենք
+            </h2>
+
+        </div>
+
+
+        <div class="contact-content">
+
+            <p>
+                Ունե՞ք նախագիծ կամ հետաքրքիր գաղափար։
+                Եկեք միասին ստեղծենք ինչ-որ հիանալի բան։
+            </p>
+
+
+            <form
+                id="contact-form"
+                class="contact-form"
+                action="https://formspree.io/f/mdekykkr"
+                method="POST"
+            >
+
+                <label for="name" class="contact-field-label">Անուն</label>
+                <input
+                    id="name"
+                    name="name" autocomplete="name"
+                    type="text"
+                    placeholder="Ձեր անունը"
+                    required
+                >
+
+                <label for="email" class="contact-field-label">Էլ․ փոստ</label>
+                <input
+                    id="email"
+                    name="email" autocomplete="email"
+                    type="email"
+                    placeholder="Ձեր էլ․ փոստը"
+                    required
+                >
+
+                <label for="message-input" class="contact-field-label">Հաղորդագրություն</label>
+                <textarea
+                    id="message-input"
+                    name="message"
+                    placeholder="Ձեր հաղորդագրությունը"
+                    rows="5"
+                    required
+                ></textarea>
+
+
+                <button
+                    type="submit"
+                    class="btn primary"
+                    id="contact-submit"
+                >
+                    Ուղարկել հաղորդագրությունը
+                </button>
+
+                <div id="message" role="status"></div>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    </main>
+    <!-- PROJECT MODAL -->
+
+    <div
+        id="project-modal"
+        class="modal"
+        aria-hidden="true"
+    >
+
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+
+            <button
+                id="modal-close"
+                class="modal-close"
+                type="button"
+            >
+                ×
+            </button>
+
+            <h2 id="modal-title">
+                Նախագիծ
+            </h2>
+
+            <p id="modal-description">
+                Նախագծի նկարագրություն
+            </p>
+
+            <div
+                id="modal-tech"
+                class="modal-tech"
+            ></div>
+
+            <a id="modal-project-link" class="modal-project-link" href="#">
+                Բացել նախագիծը <span aria-hidden="true">→</span>
+            </a>
+
+            <a id="modal-case-link" class="modal-case-link" href="#">
+                Դիտել case study
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <p>
+            © 2026 Արմինե — Front-End ծրագրավորող
+        </p>
+
+        <p>
+            Ստեղծված է HTML, CSS և JavaScript տեխնոլոգիաներով
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+    <script src="playground.js"></script>
+    <script src="portfolio-navigation.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Music Player</title>
+
+    <link rel="stylesheet" href="music.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="music-header">
+
+        <a href="index.html" class="back-link">
+            ← Portfolio
+        </a>
+
+        <div class="brand">
+            MUSIC <span>PLAYER</span>
+        </div>
+
+        <button class="playlist-button" type="button">
+            ☰ Playlist
+        </button>
+
+    </header>
+
+
+    <!-- MAIN -->
+    <main class="music-main">
+
+        <div class="player-container">
+
+            <!-- PROJECT LABEL -->
+            <span class="project-label">
+                PROJECT 04 / MUSIC PLAYER
+            </span>
+
+
+            <!-- TITLE -->
+            <h1>
+                Music <span>Player</span>
+            </h1>
+
+            <p class="description">Web Audio-ով ստեղծված երեք ցուցադրական մեղեդի՝ ցանկից ընտրությամբ և ձայնի ուժգնության կառավարմամբ։</p>
+
+
+            <p id="music-status" role="status"></p>
+            <!-- PLAYER -->
+            <section class="music-player">
+
+                <!-- COVER -->
+                <div class="album-cover">
+
+                    <div class="cover-icon">
+                        ♫
+                    </div>
+
+                </div>
+
+
+                <!-- SONG INFO -->
+                <div class="song-info">
+
+                    <span class="song-category">
+                        NOW PLAYING
+                    </span>
+
+                    <h2 id="song-title">
+                        Midnight Dreams
+                    </h2>
+
+                    <p id="artist-name">
+                        Demo Artist
+                    </p>
+
+                </div>
+
+
+                <!-- PROGRESS -->
+                <div class="progress-section">
+
+                    <span id="current-time">
+                        0:00
+                    </span>
+
+                    <input
+                        type="range"
+                        id="progress-bar"
+                        min="0"
+                        max="100"
+                        value="0"
+                    >
+
+                    <span id="duration">
+                        3:45
+                    </span>
+
+                </div>
+
+
+                <!-- CONTROLS -->
+                <div class="player-controls">
+
+                    <button
+                        type="button"
+                        id="previous-button"
+                        aria-label="Previous song"
+                    >
+                        ⏮
+                    </button>
+
+                    <button
+                        type="button"
+                        id="play-button"
+                        class="play-button"
+                        aria-label="Play"
+                    >
+                        ▶
+                    </button>
+
+                    <button
+                        type="button"
+                        id="next-button"
+                        aria-label="Next song"
+                    >
+                        ⏭
+                    </button>
+
+                </div>
+
+
+                <!-- VOLUME -->
+                <div class="volume-control">
+
+                    <span>🔊</span>
+
+                    <input
+                        type="range"
+                        id="volume-bar"
+                        min="0"
+                        max="100"
+                        value="70"
+                    >
+
+                </div>
+
+            </section>
+
+
+            <!-- PLAYLIST -->
+            <section class="playlist">
+
+                <div class="playlist-header">
+                    <h2>Playlist</h2>
+                    <span>3 Songs</span>
+                </div>
+
+
+                <button
+                    type="button"
+                    class="song-item active"
+                    data-title="Midnight Dreams"
+                    data-artist="Demo Artist"
+                >
+
+                    <span class="song-number">
+                        01
+                    </span>
+
+                    <span class="song-icon">
+                        ♫
+                    </span>
+
+                    <span class="song-details">
+                        <strong>Midnight Dreams</strong>
+                        <small>Demo Artist</small>
+                    </span>
+
+                    <span class="song-duration">
+                        3:45
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="song-item"
+                    data-title="Neon Lights"
+                    data-artist="Demo Artist"
+                >
+
+                    <span class="song-number">
+                        02
+                    </span>
+
+                    <span class="song-icon">
+                        ♫
+                    </span>
+
+                    <span class="song-details">
+                        <strong>Neon Lights</strong>
+                        <small>Demo Artist</small>
+                    </span>
+
+                    <span class="song-duration">
+                        4:12
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="song-item"
+                    data-title="Ocean Waves"
+                    data-artist="Demo Artist"
+                >
+
+                    <span class="song-number">
+                        03
+                    </span>
+
+                    <span class="song-icon">
+                        ♫
+                    </span>
+
+                    <span class="song-details">
+                        <strong>Ocean Waves</strong>
+                        <small>Demo Artist</small>
+                    </span>
+
+                    <span class="song-duration">
+                        3:28
+                    </span>
+
+                </button>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- JAVASCRIPT -->
+    <script src="music-engine.js"></script>
+
+</body>
+</html>

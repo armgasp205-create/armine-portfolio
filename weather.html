@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Weather App | Portfolio</title>
+
+    <link rel="stylesheet" href="weather.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="weather-header">
+
+        <a href="index.html" class="back-link">
+            ← Portfolio
+        </a>
+
+        <div class="logo">
+            WEATHER APP
+        </div>
+
+        <button id="theme-toggle" class="theme-button">
+            🌙
+        </button>
+
+    </header>
+
+
+    <!-- MAIN -->
+    <main>
+
+        <section class="weather-intro">
+
+            <span class="project-label">
+                PROJECT 03 / WEATHER APP
+            </span>
+
+            <h1>
+                Weather Dashboard
+            </h1>
+
+            <p>Քաղաքի որոնում, ընթացիկ եղանակային տվյալներ և հնգօրյա կանխատեսում՝ Open-Meteo-ից։</p>
+
+        </section>
+
+
+        <!-- SEARCH -->
+        <section class="weather-card">
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="city-input"
+                    placeholder="Enter city name..." aria-label="City name"
+                >
+
+                <button id="search-button">
+                    Search
+                </button>
+
+            </div>
+
+
+            <!-- WEATHER INFO -->
+            <p id="weather-status" role="status"></p><div class="weather-info" hidden>
+
+                <div class="weather-icon" id="weather-icon">
+                    🌤️
+                </div>
+
+                <h2 id="city-name">
+                    Yerevan
+                </h2>
+
+                <div class="temperature" id="temperature">
+                    24°C
+                </div>
+
+                <p id="weather-description">
+                    Partly Cloudy
+                </p>
+
+            </div>
+
+
+            <!-- DETAILS -->
+            <div class="weather-details" hidden>
+
+                <div class="detail">
+                    <span>💧</span>
+                    <strong id="humidity">55%</strong>
+                    <small>Humidity</small>
+                </div>
+
+                <div class="detail">
+                    <span>💨</span>
+                    <strong id="wind">12 km/h</strong>
+                    <small>Wind</small>
+                </div>
+
+                <div class="detail">
+                    <span>🌡️</span>
+                    <strong id="feels-like">23°C</strong>
+                    <small>Feels Like</small>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FORECAST -->
+        <section class="forecast-section">
+
+            <h2>5-Day Forecast</h2>
+
+            <div class="forecast-grid"></div><p>Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a></p></section>
+
+    </main>
+
+
+    <!-- TOAST -->
+    <div id="toast" class="toast">
+        City searched
+    </div>
+
+
+    <script src="weather-live.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+# Local deployment archives and saved browser copies
+*.zip
+Armine Shop_files/
+
+# Local tooling and credentials
+.netlify/
+node_modules/
+.env
+.env.*
+!.env.example
+*.log
+Thumbs.db
+.DS_Store

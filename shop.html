@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Modern Shop</title>
+
+    <link rel="stylesheet" href="shop.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header class="shop-header">
+        <div class="shop-container">
+
+            <a href="index.html" class="back-link">
+                ← Portfolio
+            </a>
+
+            <div class="shop-brand">
+                <h1>MODERN SHOP</h1>
+            </div>
+
+            <button
+                type="button"
+                class="cart-button"
+                id="cart-button"
+            >
+                🛒 Զամբյուղ
+                <span id="cart-count">0</span>
+            </button>
+
+        </div>
+    </header>
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section class="shop-hero">
+        <div class="shop-container">
+
+            <span class="shop-label">
+                PROJECT 01 / E-COMMERCE
+            </span>
+
+            <h2>Modern Shop</h2>
+
+            <p>
+                Ժամանակակից mini e-commerce ինտերֆեյս՝
+                ապրանքների որոնմամբ, ֆիլտրով,
+                զամբյուղով և հաշվարկով։
+            </p>
+
+            <div class="shop-badges">
+                <span>LIVE</span>
+                <span>DEMO</span>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- =========================
+         PRODUCTS
+    ========================== -->
+
+    <main class="shop-main">
+
+        <div class="shop-container">
+
+            <div class="products-header">
+
+                <!-- Products title -->
+
+                <div class="products-title">
+                    <strong>Ապրանքներ</strong>
+                    <span id="product-results-count" role="status">6 ապրանք</span>
+                </div>
+
+
+                <!-- Search -->
+
+                <div class="shop-search">
+
+                    <input
+                        type="search"
+                        id="search-input"
+                        placeholder="🔎 Փնտրել ապրանք..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <label class="shop-sort">Դասավորել <select id="product-sort"><option value="default">Սկզբնական</option><option value="price-asc">Գինը՝ աճող</option><option value="price-desc">Գինը՝ նվազող</option><option value="name">Անվանումով</option></select></label>
+                <!-- Filters -->
+
+                <div class="filters">
+
+                    <button
+                        type="button"
+                        class="filter active"
+                        data-category="all"
+                    >
+                        Բոլորը
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filter"
+                        data-category="tech"
+                    >
+                        Tech
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filter"
+                        data-category="fashion"
+                    >
+                        Fashion
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filter"
+                        data-category="accessories"
+                    >
+                        Accessories
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Products will be inserted by JavaScript -->
+
+            <div
+                id="products-grid"
+                class="product-grid"
+            ></div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         CART OVERLAY
+    ========================== -->
+
+    <div
+        class="cart-overlay"
+        id="cart-overlay"
+    ></div>
+
+
+    <!-- =========================
+         CART PANEL
+    ========================== -->
+
+    <aside
+        class="cart-panel"
+        id="cart-panel"
+    >
+
+        <div class="cart-header">
+
+            <div>
+
+                <span class="cart-label">
+                    YOUR CART
+                </span>
+
+                <h2>Զամբյուղ</h2>
+
+            </div>
+
+            <button
+                type="button"
+                class="close-cart"
+                id="close-cart"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- Cart items -->
+
+        <div
+            class="cart-items"
+            id="cart-items"
+        ></div>
+
+
+        <!-- Cart footer -->
+
+        <div class="cart-footer">
+
+            <div class="cart-total">
+
+                <span>Ընդհանուր</span>
+
+                <strong>
+                    $
+                    <span id="cart-total">
+                        0.00
+                    </span>
+                </strong>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="checkout-button"
+                id="checkout-button"
+            >
+                Պատվիրել →
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================
+         TOAST
+    ========================== -->
+
+    <div
+        class="toast"
+        id="toast"
+    ></div>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script src="shop.js"></script>
+
+</body>
+</html>

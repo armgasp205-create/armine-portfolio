@@ -1,0 +1,607 @@
+/* =========================================
+   PROJECT 02 — ADMIN DASHBOARD
+   ========================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    background: #0b0d12;
+    color: #f5f7fb;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+.dashboard-header {
+    min-height: 72px;
+    padding: 0 6%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    background: #0f1219;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.back-link {
+    color: #aeb6c8;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.back-link:hover {
+    color: #ffffff;
+}
+
+.dashboard-logo {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.dashboard-logo span {
+    margin-right: 7px;
+}
+
+.theme-toggle {
+    width: 40px;
+    height: 40px;
+
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+
+    background: #181c26;
+    color: #ffffff;
+
+    cursor: pointer;
+}
+
+/* =========================================
+   CONTAINER
+   ========================================= */
+
+.dashboard-container {
+    width: min(1200px, 90%);
+    margin: 0 auto;
+    padding: 70px 0 90px;
+}
+
+/* =========================================
+   INTRO
+   ========================================= */
+
+.dashboard-intro {
+    margin-bottom: 45px;
+}
+
+.project-label,
+.card-label {
+    color: #8f9ab0;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.dashboard-intro h1 {
+    margin-top: 10px;
+
+    font-size: clamp(42px, 6vw, 70px);
+    line-height: 1;
+    letter-spacing: -3px;
+}
+
+.dashboard-intro p {
+    max-width: 650px;
+    margin-top: 20px;
+
+    color: #929caf;
+    line-height: 1.8;
+}
+
+/* =========================================
+   STATS
+   ========================================= */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+
+    margin-bottom: 22px;
+}
+
+.stat-card {
+    padding: 24px;
+
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 17px;
+
+    background: #11141c;
+
+    transition: 0.25s;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255,255,255,0.17);
+}
+
+.stat-icon {
+    display: block;
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+
+.stat-card p {
+    color: #929caf;
+    font-size: 13px;
+}
+
+.stat-card h2 {
+    margin: 5px 0 8px;
+    font-size: 28px;
+}
+
+.stat-change {
+    color: #9da7ba;
+    font-size: 12px;
+}
+
+/* =========================================
+   DASHBOARD GRID
+   ========================================= */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 22px;
+
+    margin-bottom: 22px;
+}
+
+.dashboard-card {
+    padding: 25px;
+
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+
+    background: #11141c;
+}
+
+/* =========================================
+   CARD HEADER
+   ========================================= */
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    margin-bottom: 25px;
+}
+
+.card-header h2 {
+    margin-top: 5px;
+    font-size: 21px;
+}
+
+.card-header select {
+    padding: 9px 12px;
+
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+
+    outline: none;
+
+    background: #1a1f29;
+    color: #cbd2df;
+}
+
+/* =========================================
+   CHART
+   ========================================= */
+
+.chart {
+    height: 290px;
+
+    display: flex;
+    gap: 15px;
+}
+
+.chart-y {
+    width: 40px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    padding-bottom: 35px;
+
+    color: #737d91;
+    font-size: 10px;
+    text-align: right;
+}
+
+.chart-area {
+    flex: 1;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    gap: 12px;
+
+    padding: 10px 5px 0;
+
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+
+    background:
+        linear-gradient(
+            to bottom,
+            transparent 19%,
+            rgba(255,255,255,0.05) 20%,
+            transparent 21%,
+            transparent 39%,
+            rgba(255,255,255,0.05) 40%,
+            transparent 41%,
+            transparent 59%,
+            rgba(255,255,255,0.05) 60%,
+            transparent 61%,
+            transparent 79%,
+            rgba(255,255,255,0.05) 80%,
+            transparent 81%
+        );
+}
+
+.bar {
+    width: 100%;
+    max-width: 45px;
+
+    min-height: 25px;
+
+    position: relative;
+
+    border-radius: 8px 8px 0 0;
+
+    background: #8994a8;
+
+    transition: 0.3s;
+}
+
+.bar:hover {
+    transform: scaleY(1.04);
+    background: #ffffff;
+}
+
+.bar span {
+    position: absolute;
+
+    bottom: -30px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    color: #737d91;
+    font-size: 10px;
+}
+
+/* =========================================
+   PROGRESS
+   ========================================= */
+
+.progress-item {
+    margin-bottom: 27px;
+}
+
+.progress-item:last-child {
+    margin-bottom: 0;
+}
+
+.progress-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 9px;
+
+    color: #aeb6c8;
+    font-size: 13px;
+}
+
+.progress-top strong {
+    color: #ffffff;
+}
+
+.progress {
+    width: 100%;
+    height: 8px;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+
+    background: #202532;
+}
+
+.progress div {
+    height: 100%;
+
+    border-radius: 20px;
+
+    background: #8f9ab0;
+}
+
+/* =========================================
+   ORDERS
+   ========================================= */
+
+.orders-card {
+    margin-bottom: 0;
+}
+
+.small-button {
+    padding: 9px 13px;
+
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+
+    background: #181c26;
+    color: #cbd2df;
+
+    cursor: pointer;
+}
+
+.small-button:hover {
+    background: #ffffff;
+    color: #11141c;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 15px 10px;
+
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+
+    text-align: left;
+
+    font-size: 13px;
+}
+
+th {
+    color: #737d91;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+}
+
+td {
+    color: #cbd2df;
+}
+
+tbody tr:hover {
+    background: rgba(255,255,255,0.025);
+}
+
+/* =========================================
+   STATUS
+   ========================================= */
+
+.status {
+    display: inline-block;
+
+    padding: 5px 9px;
+
+    border-radius: 999px;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.status.completed {
+    background: #202a25;
+    color: #a9c2b2;
+}
+
+.status.pending {
+    background: #29271f;
+    color: #c5bd99;
+}
+
+.status.cancelled {
+    background: #2a2023;
+    color: #c9a6ad;
+}
+
+/* =========================================
+   TOAST
+   ========================================= */
+
+.toast {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+
+    z-index: 1000;
+
+    display: none;
+
+    padding: 13px 18px;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+    color: #11141c;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+.toast.show {
+    display: block;
+}
+
+/* =========================================
+   LIGHT MODE
+   ========================================= */
+
+body.light-mode {
+    background: #f5f6f8;
+    color: #11141c;
+}
+
+body.light-mode .dashboard-header {
+    background: rgba(245,246,248,0.95);
+    border-bottom-color: rgba(0,0,0,0.08);
+}
+
+body.light-mode .back-link {
+    color: #596171;
+}
+
+body.light-mode .theme-toggle {
+    background: #ffffff;
+    color: #11141c;
+    border-color: rgba(0,0,0,0.1);
+}
+
+body.light-mode .stat-card,
+body.light-mode .dashboard-card {
+    background: #ffffff;
+    border-color: rgba(0,0,0,0.08);
+}
+
+body.light-mode .dashboard-intro p,
+body.light-mode .stat-card p {
+    color: #687080;
+}
+
+body.light-mode .card-header select,
+body.light-mode .small-button {
+    background: #f0f1f4;
+    color: #333b4a;
+    border-color: rgba(0,0,0,0.08);
+}
+
+body.light-mode .progress {
+    background: #e4e6eb;
+}
+
+body.light-mode th,
+body.light-mode .chart-y,
+body.light-mode .bar span {
+    color: #7a8190;
+}
+
+body.light-mode td {
+    color: #333b4a;
+}
+
+body.light-mode tbody tr:hover {
+    background: rgba(0,0,0,0.025);
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 1000px) {
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 650px) {
+
+    .dashboard-header {
+        padding: 15px 5%;
+    }
+
+    .dashboard-logo {
+        font-size: 16px;
+    }
+
+    .dashboard-container {
+        width: 90%;
+        padding-top: 50px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-card {
+        padding: 20px;
+    }
+
+    .card-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .card-header select,
+    .small-button {
+        width: 100%;
+    }
+
+    .chart {
+        height: 240px;
+    }
+
+    .chart-area {
+        gap: 6px;
+    }
+
+    .bar {
+        max-width: 30px;
+    }
+
+    .dashboard-logo {
+        order: -1;
+    }
+}
+
+.demo-notice { border-left: 3px solid #22d3ee; padding: 12px 16px; background: rgba(34,211,238,.08); border-radius: 8px; margin: 20px 0 8px; font-size: 14px; }
+#dashboard-period-status { font-size: 14px; opacity: .8; margin-bottom: 24px; }
+#export-orders { margin-bottom: 16px; }
+.bar { transition: height .35s ease; }
+.bar:focus-visible { outline: 3px solid #22d3ee; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .bar { transition: none; } }
+.bar { min-height: 0; }
+#order-status-filter { padding: 9px; border: 1px solid #8994a8; border-radius: 8px; background: transparent; color: inherit; margin: 0 14px 16px 8px; }
+#order-status-filter option { background: white; color: #111827; }

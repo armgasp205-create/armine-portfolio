@@ -1,0 +1,28 @@
+.playground-panel { max-width: 760px; margin: auto; padding: clamp(20px, 4vw, 40px); border: 1px solid rgba(34,211,238,.25); border-radius: 24px; background: linear-gradient(135deg, rgba(124,58,237,.12), rgba(6,182,212,.08)); }
+.playground-heading { text-align: center; margin-bottom: 28px; }
+.playground-heading > span { color: #22d3ee; font-size: 13px; letter-spacing: 3px; }
+.playground-heading h2 { font-size: clamp(25px, 4vw, 38px); margin: 10px 0; }
+.playground-intro { opacity: .8; max-width: 600px; margin: auto; }
+.playground-form { display: flex; gap: 12px; }
+.playground-form > input { min-width: 0; flex: 1; padding: 14px 16px; border-radius: 12px; border: 1px solid rgba(148,163,184,.4); background: rgba(0,0,0,.2); color: inherit; }
+.playground-add { padding: 12px 20px; border: 0; border-radius: 12px; background: #22d3ee; color: #082f49; font-weight: 700; }
+.playground-add:disabled { opacity: .5; cursor: default; }
+.playground-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 18px; }
+.playground-filters button { border: 1px solid rgba(148,163,184,.35); border-radius: 999px; padding: 8px 15px; background: transparent; color: inherit; }
+.playground-filters button[aria-pressed="true"] { background: #22d3ee; color: #082f49; border-color: #22d3ee; }
+.playground-summary { font-size: 14px; margin-bottom: 8px; }
+.playground-panel progress { display: block; width: 100%; height: 9px; border: 0; border-radius: 8px; overflow: hidden; accent-color: #22d3ee; }
+.playground-panel progress::-webkit-progress-bar { background: rgba(148,163,184,.2); }
+.playground-panel progress::-webkit-progress-value { background: linear-gradient(90deg, #a855f7, #22d3ee); }
+.playground-panel progress::-moz-progress-bar { background: #22d3ee; }
+.playground-list { list-style: none; display: grid; gap: 10px; margin-top: 22px; }
+.playground-list li { display: flex; gap: 12px; align-items: center; padding: 12px 16px; border: 1px solid rgba(148,163,184,.2); border-radius: 12px; background: rgba(0,0,0,.12); }
+.playground-list label { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; cursor: pointer; }
+.playground-list label span { overflow-wrap: anywhere; }
+.playground-list input { width: 20px; height: 20px; flex-shrink: 0; accent-color: #22d3ee; }
+.playground-list .is-complete label span { text-decoration: line-through; opacity: .55; }
+.playground-list button { width: 36px; height: 36px; flex-shrink: 0; border: 0; border-radius: 8px; background: transparent; color: inherit; font-size: 25px; }
+.playground-list button:hover { background: rgba(244,63,94,.15); color: #fb7185; }
+.playground-empty { text-align: center; opacity: .7; padding: 24px 0 6px; }
+body.light-mode .playground-form > input, body.light-mode .playground-list li { background: rgba(255,255,255,.7); }
+@media (max-width: 520px) { .playground-form { flex-direction: column; } .playground-add { min-height: 46px; } }
