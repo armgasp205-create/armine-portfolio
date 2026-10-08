@@ -3,7 +3,7 @@
 **Սկսնակ Front-End ծրագրավորող**
 
 GitHub՝ [armgasp205-create](https://github.com/armgasp205-create)  
-Պորտֆոլիո՝ [armine-web.netlify.app](https://armine-web.netlify.app/)  
+Պորտֆոլիո՝ [armgasp205-create.github.io/armine-portfolio](https://armgasp205-create.github.io/armine-portfolio/)  
 Էլ․ փոստ՝ [armine.gasparyan94@mail.ru](mailto:armine.gasparyan94@mail.ru)
 
 ## Իմ մասին
@@ -44,7 +44,7 @@ GitHub՝ [armgasp205-create](https://github.com/armgasp205-create)
 Երեք սինթեզված մեղեդի, pause/resume, ձայնի տեղափոխում, հաջորդ/նախորդ ընտրություն և ուժգնության կառավարում։ HTML, CSS, JavaScript, Web Audio API։
 
 **Իմ օրը — React + TypeScript հավելված**  
-Առաջադրանքներ, որոնում, զտիչներ, առաջընթաց, ծախսերի ավելացում և խմբագրում, ամսական բյուջե և մնացորդ։ React, TypeScript, Context, React Router, Vite, localStorage։ Supabase-ով մուտքի և առցանց պահպանման ինտեգրումը մշակման ու վերջնական փորձարկման փուլում է։
+Առաջադրանքներ, որոնում, զտիչներ, առաջընթաց, ծախսերի ավելացում և խմբագրում, ամսական բյուջե և մնացորդ։ React, TypeScript, Context, React Router, Vite, localStorage։ Supabase-ով մուտքը, առցանց պահպանումը և նույն հաշվով երկու սարքերի միջև տվյալների բեռնումը գործարկված են։ Համաժամացումը կատարվում է օգտատիրոջ ընտրությամբ։
 
 Նախագծերի կոդը՝ [armine-portfolio](https://github.com/armgasp205-create/armine-portfolio)։
 
