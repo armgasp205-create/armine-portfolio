@@ -2236,3 +2236,6 @@ body.light-mode .nav-links a[aria-current="location"] { color: #6d28d9; }
 .planner-preview-line { height: 10px; border-radius: 8px; background: rgba(148,163,184,.3); width: 90%; }
 .planner-preview-line.short { width: 65%; }
 .planner-preview-progress { height: 7px; width: 100%; background: linear-gradient(to right, #67e8f9 60%, rgba(148,163,184,.2) 60%); border-radius: 8px; }
+.blog-preview { background: #25352e; color: #c4f279; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.blog-preview > span { font: 700 80px Georgia, serif; }
+.blog-preview > p { font-size: 12px; letter-spacing: 3px; }

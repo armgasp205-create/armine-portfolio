@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Armine's Front-End developer portfolio - projects built with HTML, CSS, and JavaScript.">
+    <meta name="description" content="Արմինեի Front-End պորտֆոլիոն՝ HTML, CSS, JavaScript, React, TypeScript և Next.js նախագծերով։">
     <meta name="theme-color" content="#080a12">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Armine | Front-End Developer">
@@ -15,6 +15,9 @@
 
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="playground.css">
+    <link rel="stylesheet" href="frontend.css">
+    <script src="frontend-utils.js" defer></script>
+    <script src="frontend-accessibility.js" defer></script>
 </head>
 
 <body>
@@ -75,7 +78,7 @@
         <div class="hero-image">
 
             <img
-                src="hero.png"
+                src="hero.webp" width="1000" height="563" fetchpriority="high" decoding="async"
                 alt="Portrait of Armine"
             >
 
@@ -119,7 +122,7 @@
     <section class="stats-section" aria-label="Portfolio highlights">
         <div class="stats-grid">
             <article class="stat-card">
-                <span class="stat-number" data-target="5">0</span>
+                <span class="stat-number" data-target="6">0</span>
                 <span class="stat-label">Projects built</span>
             </article>
             <article class="stat-card">
@@ -308,7 +311,7 @@
                 <span class="sr-only">Որոնել նախագծեր</span>
                 <input id="project-search" type="search" placeholder="Որոնել նախագծեր..." autocomplete="off">
             </label>
-            <p class="project-count" aria-live="polite"><span id="visible-project-count">5</span> նախագծեր</p>
+            <p class="project-count" aria-live="polite"><span id="visible-project-count">6</span> նախագծեր</p>
         </div>
 
         <div class="projects-grid">
@@ -545,6 +548,20 @@
                     <a class="case-study-button" href="case-study.html?project=planner">Նախագծի մանրամասները →</a>
                 </div>
             </article>
+            <!-- PROJECT 06 -->
+            <article class="project-card" data-category="creative">
+                <button class="project-save" type="button" aria-label="Save Next.js Blog" aria-pressed="false" data-project-id="blog">♡</button>
+                <div class="project-preview blog-preview" data-project="blog"><span>N.</span><p>NEXT.JS · BLOG</p></div>
+                <div class="project-info">
+                    <span class="project-number">ՆԱԽԱԳԻԾ 06</span>
+                    <h3>Next.js ուսման բլոգ</h3>
+                    <p>Հայերեն բլոգ՝ երեք ուսումնական հոդվածով, առանձին էջերով և էջերի վերնագրերով։</p>
+                    <div class="project-tags"><span>Next.js</span><span>React</span><span>TypeScript</span><span>CSS</span></div>
+                    <a class="project-button" href="next-blog/">Դիտել նախագիծը →</a>
+                    <a class="case-study-button" href="case-study.html?project=blog">Նախագծի մանրամասները →</a>
+                </div>
+            </article>
+
 
 
         </div>
@@ -714,9 +731,9 @@
     </footer>
 
 
-    <script src="script.js"></script>
-    <script src="playground.js"></script>
-    <script src="portfolio-navigation.js"></script>
+    <script src="script.js" defer></script>
+    <script src="playground.js" defer></script>
+    <script src="portfolio-navigation.js" defer></script>
 
 </body>
 </html>

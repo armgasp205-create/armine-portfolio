@@ -13,5 +13,17 @@ react-learning/dist/
 .env.*
 !.env.example
 *.log
+next-blog/.next/
+next-blog/out/
+next-blog/*.tsbuildinfo
+next-blog/next-env.d.ts
+next-blog/_next/
+next-blog/posts/
+next-blog/404/
+next-blog/_not-found/
+next-blog/*.html
+next-blog/*.txt
 Thumbs.db
 .DS_Store
+test-results/
+playwright-report/

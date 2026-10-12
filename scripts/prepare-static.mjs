@@ -1,4 +1,4 @@
-import { copyFile, mkdir, readdir } from "node:fs/promises";
+import { copyFile, cp, mkdir, readdir } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { join } from "node:path";
 
@@ -11,4 +11,11 @@ for (const file of await readdir(root, { withFileTypes: true })) {
     await copyFile(join(root, file.name), join(output, file.name));
   }
 }
-console.log("Portfolio assets and React app are ready in .site-dist");
+await cp(join(root, "next-blog/out"), join(output, "next-blog"), { recursive: true });
+try {
+  await cp(join(root, "react-planner"), join(output, "react-planner"), { recursive: true });
+} catch (error) {
+  // CI builds React directly into .site-dist; local builds use react-planner.
+  if (error.code !== "ENOENT") throw error;
+}
+console.log("Portfolio assets, React app and Next.js blog are ready in .site-dist");

@@ -1,6 +1,6 @@
 [build]
-  command = "npm --prefix react-learning ci && npm --prefix react-learning run build:portfolio"
-  publish = "."
+  command = "npm --prefix react-learning ci && npm --prefix react-learning run build -- --base=/react-planner/ --outDir ../.site-dist/react-planner --emptyOutDir && npm --prefix next-blog ci && npm --prefix next-blog run build && node scripts/prepare-static.mjs"
+  publish = ".site-dist"
 
 [build.environment]
   NODE_VERSION = "24"

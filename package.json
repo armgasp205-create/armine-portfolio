@@ -1,0 +1,5 @@
+{
+  "name": "armine-portfolio-checks", "private": true,
+  "scripts": { "test": "vitest run", "test:e2e": "playwright test", "preview": "node scripts/serve-preview.mjs" },
+  "devDependencies": { "@playwright/test": "latest", "vitest": "latest", "@axe-core/playwright": "latest" }
+}

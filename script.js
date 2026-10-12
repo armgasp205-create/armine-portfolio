@@ -11,11 +11,14 @@ document.addEventListener("DOMContentLoaded", () => {
     let lastFocusedElement = null;
 
     const projects = {
+
         shop: { title: "Modern Shop", description: "Учебная витрина: поиск товаров, фильтры категорий и корзина с изменением количества, расчётом суммы и сохранением в localStorage.", tech: ["HTML", "CSS", "JavaScript"], url: "shop.html", caseStudy: "case-study.html?project=shop" },
         dashboard: { title: "Admin Dashboard", description: "Демо dashboard: фильтрация за 7/30/90 дней, пересчёт диаграммы и показателей, список заказов и экспорт CSV.", tech: ["HTML", "CSS", "JavaScript"], url: "dashboard.html", caseStudy: "case-study.html?project=dashboard" },
         weather: { title: "Приложение погоды", description: "Погода с поиском города, текущими показателями и пятидневным прогнозом из Open-Meteo API.", tech: ["HTML", "CSS", "JavaScript", "API"], url: "weather.html", caseStudy: "case-study.html?project=weather" },
         music: { title: "Музыкальный плеер", description: "Web Audio плеер: три синтезированные мелодии, настоящая пауза и продолжение, перемотка и регулировка громкости.", tech: ["HTML", "CSS", "JavaScript", "Web Audio"], url: "music.html", caseStudy: "case-study.html?project=music" },
-        planner: { title: "Планировщик задач на React", description: "Приложение React + TypeScript: задачи, редактирование расходов, месячный бюджет, поиск и локальное хранение.", tech: ["React", "TypeScript", "React Router", "CSS", "Vite"], url: "react-planner/", caseStudy: "case-study.html?project=planner" }
+        planner: { title: "Планировщик задач на React", description: "Приложение React + TypeScript: задачи, редактирование расходов, месячный бюджет, поиск и локальное хранение.", tech: ["React", "TypeScript", "React Router", "CSS", "Vite"], url: "react-planner/", caseStudy: "case-study.html?project=planner" },
+        blog: {"title":"Учебный блог на Next.js","description":"Блог на армянском: три учебные статьи, отдельные страницы и метаданные.","tech":["Next.js","React","TypeScript","CSS"],"url":"next-blog/","caseStudy":"case-study.html?project=blog"},
+
     };
 
     let heroTypingTimer;
@@ -69,11 +72,11 @@ document.addEventListener("DOMContentLoaded", () => {
         themeButton?.setAttribute("aria-pressed", String(isLight));
         themeButton?.setAttribute("aria-label", isLight ? "Switch to dark theme" : "Switch to light theme");
         if (themeButton) themeButton.textContent = isLight ? "☀️" : "🌙";
-        localStorage.setItem("portfolio-theme", isLight ? "light" : "dark");
+        Frontend.storage.setItem("portfolio-theme", isLight ? "light" : "dark");
     }
 
     if (themeButton) {
-        setTheme(localStorage.getItem("portfolio-theme") === "light");
+        setTheme(Frontend.storage.getItem("portfolio-theme") === "light");
         themeButton.addEventListener("click", () => setTheme(!body.classList.contains("light-mode")));
     }
 
@@ -102,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (about[1]) about[1].textContent = "В моём портфолио — магазин, dashboard, приложение погоды, музыкальный плеер и планировщик на React + TypeScript. На этих проектах изучаю управление данными, API, доступность и Git.";
         const skillDescriptions = ["Создаю понятную и доступную структуру сайтов.", "Делаю адаптивные, современные и красивые интерфейсы.", "Добавляю интерактивность и полезные функции."];
         document.querySelectorAll(".skill-card p").forEach((paragraph, index) => paragraph.textContent = skillDescriptions[index]);
-        const projectTexts = [["Интернет-магазин — Modern Shop", "Учебная витрина: поиск товаров, фильтры категорий и корзина с изменением количества, расчётом суммы и сохранением в localStorage."], ["Admin Dashboard", "Демо dashboard: фильтрация за 7/30/90 дней, пересчёт диаграммы и показателей, список заказов и экспорт CSV."], ["Приложение погоды", "Погода с поиском города, текущими показателями и пятидневным прогнозом из Open-Meteo API."], ["Музыкальный плеер", "Web Audio плеер: три синтезированные мелодии, настоящая пауза и продолжение, перемотка и регулировка громкости."], ["Планировщик задач на React", "Приложение React + TypeScript: задачи, редактирование расходов, месячный бюджет, поиск и локальное хранение."]];
+        const projectTexts = [["Интернет-магазин — Modern Shop", "Учебная витрина: поиск товаров, фильтры категорий и корзина с изменением количества, расчётом суммы и сохранением в localStorage."], ["Admin Dashboard", "Демо dashboard: фильтрация за 7/30/90 дней, пересчёт диаграммы и показателей, список заказов и экспорт CSV."], ["Приложение погоды", "Погода с поиском города, текущими показателями и пятидневным прогнозом из Open-Meteo API."], ["Музыкальный плеер", "Web Audio плеер: три синтезированные мелодии, настоящая пауза и продолжение, перемотка и регулировка громкости."], ["Планировщик задач на React", "Приложение React + TypeScript: задачи, редактирование расходов, месячный бюджет, поиск и локальное хранение."], ["Учебный блог на Next.js","Блог на армянском: три учебные статьи, отдельные страницы и метаданные."]];
         document.querySelectorAll(".project-card").forEach((card, index) => {
             card.querySelector("h3").textContent = projectTexts[index][0];
             card.querySelector(".project-info p").textContent = projectTexts[index][1];
@@ -141,16 +144,16 @@ document.addEventListener("DOMContentLoaded", () => {
             intro: "Ես ստեղծում եմ գեղեցիկ, արագ և հարմարավետ կայքեր HTML, CSS և JavaScript-ով։", buttons: ["Տեսնել նախագծերը", "Կապ հաստատել"], headings: ["Իմ մասին", "Հմտություններ", "Նախագծեր", "Եկեք համագործակցենք"],
             about: ["Ես Արմինեն եմ՝ սկսնակ Front-End ծրագրավորող։ HTML, CSS և JavaScript-ով կառուցում եմ responsive էջեր և ինտերակտիվ ուսումնական հավելվածներ։", "Իմ պորտֆոլիոն ներառում է խանութ, dashboard, եղանակի հավելված, երաժշտական նվագարկիչ և React + TypeScript պլանավորիչ։ Նախագծերի միջոցով ուսումնասիրում եմ տվյալների կառավարումը, API-ները, մատչելիությունը և Git-ի աշխատանքը։"],
             skills: ["Ստեղծում եմ հասանելի ու ճիշտ կառուցվածքով կայքեր։", "Պատրաստում եմ responsive, ժամանակակից և գեղեցիկ ինտերֆեյսներ։", "Ավելացնում եմ ինտերակտիվություն և օգտակար հնարավորություններ։"],
-            projectTexts: [["Առցանց խանութ — Modern Shop", "Ուսումնական խանութ՝ ապրանքների որոնմամբ, կատեգորիաների զտմամբ և զամբյուղով՝ քանակի փոփոխություն, գումարի հաշվարկ ու պահպանում localStorage-ում։"], ["Admin Dashboard", "Ցուցադրական dashboard՝ 7/30/90 օրվա զտմամբ, վերահաշվարկվող գրաֆիկով ու ցուցանիշներով, պատվերների ցանկով և CSV ներբեռնմամբ։"], ["Եղանակի հավելված", "Եղանակի հավելված՝ քաղաքների որոնմամբ, ընթացիկ տվյալներով և հնգօրյա կանխատեսմամբ՝ Open-Meteo API-ից։"], ["Երաժշտական նվագարկիչ", "Web Audio նվագարկիչ՝ երեք սինթեզված մեղեդով, իրական pause/resume-ով, ձայնի տեղափոխմամբ և ուժգնության կառավարմամբ։"], ["React առաջադրանքների պլանավորիչ", "React + TypeScript հավելված՝ առաջադրանքներով, ծախսերի խմբագրմամբ, ամսական բյուջեով, որոնմամբ և տեղային պահպանմամբ։"]],
-            filters: ["Բոլորը", "Խանութ", "Գործիքներ", "Ստեղծարար"], search: "Որոնել նախագծեր...", contact: "Գրիր ինձ, եթե ցանկանում ես համագործակցել կամ ունես նոր գաղափար։", placeholders: ["Քո անունը", "Քո email-ը", "Քո հաղորդագրությունը"], send: "Ուղարկել հաղորդագրությունը", modal: "Բացել նախագիծ", stats: ["Ստեղծված նախագծեր", "Հիմնական հմտություններ", "Կայքի լեզուներ"], modalProjects: [["Modern Shop", "Ուսումնական խանութ՝ ապրանքների որոնմամբ, կատեգորիաների զտմամբ և զամբյուղով՝ քանակի փոփոխություն, գումարի հաշվարկ ու պահպանում localStorage-ում։"], ["Admin Dashboard", "Ցուցադրական dashboard՝ 7/30/90 օրվա զտմամբ, վերահաշվարկվող գրաֆիկով ու ցուցանիշներով, պատվերների ցանկով և CSV ներբեռնմամբ։"], ["Եղանակի հավելված", "Եղանակի հավելված՝ քաղաքների որոնմամբ, ընթացիկ տվյալներով և հնգօրյա կանխատեսմամբ՝ Open-Meteo API-ից։"], ["Երաժշտական նվագարկիչ", "Web Audio նվագարկիչ՝ երեք սինթեզված մեղեդով, իրական pause/resume-ով, ձայնի տեղափոխմամբ և ուժգնության կառավարմամբ։"], ["React առաջադրանքների պլանավորիչ", "React + TypeScript հավելված՝ առաջադրանքներով, ծախսերի խմբագրմամբ, ամսական բյուջեով, որոնմամբ և տեղային պահպանմամբ։"]]
+            projectTexts: [["Առցանց խանութ — Modern Shop", "Ուսումնական խանութ՝ ապրանքների որոնմամբ, կատեգորիաների զտմամբ և զամբյուղով՝ քանակի փոփոխություն, գումարի հաշվարկ ու պահպանում localStorage-ում։"], ["Admin Dashboard", "Ցուցադրական dashboard՝ 7/30/90 օրվա զտմամբ, վերահաշվարկվող գրաֆիկով ու ցուցանիշներով, պատվերների ցանկով և CSV ներբեռնմամբ։"], ["Եղանակի հավելված", "Եղանակի հավելված՝ քաղաքների որոնմամբ, ընթացիկ տվյալներով և հնգօրյա կանխատեսմամբ՝ Open-Meteo API-ից։"], ["Երաժշտական նվագարկիչ", "Web Audio նվագարկիչ՝ երեք սինթեզված մեղեդով, իրական pause/resume-ով, ձայնի տեղափոխմամբ և ուժգնության կառավարմամբ։"], ["React առաջադրանքների պլանավորիչ", "React + TypeScript հավելված՝ առաջադրանքներով, ծախսերի խմբագրմամբ, ամսական բյուջեով, որոնմամբ և տեղային պահպանմամբ։"], ["Next.js ուսման բլոգ","Հայերեն բլոգ՝ երեք ուսումնական հոդվածով, առանձին էջերով և էջերի վերնագրերով։"]],
+            filters: ["Բոլորը", "Խանութ", "Գործիքներ", "Ստեղծարար"], search: "Որոնել նախագծեր...", contact: "Գրիր ինձ, եթե ցանկանում ես համագործակցել կամ ունես նոր գաղափար։", placeholders: ["Քո անունը", "Քո email-ը", "Քո հաղորդագրությունը"], send: "Ուղարկել հաղորդագրությունը", modal: "Բացել նախագիծ", stats: ["Ստեղծված նախագծեր", "Հիմնական հմտություններ", "Կայքի լեզուներ"], modalProjects: [["Modern Shop", "Ուսումնական խանութ՝ ապրանքների որոնմամբ, կատեգորիաների զտմամբ և զամբյուղով՝ քանակի փոփոխություն, գումարի հաշվարկ ու պահպանում localStorage-ում։"], ["Admin Dashboard", "Ցուցադրական dashboard՝ 7/30/90 օրվա զտմամբ, վերահաշվարկվող գրաֆիկով ու ցուցանիշներով, պատվերների ցանկով և CSV ներբեռնմամբ։"], ["Եղանակի հավելված", "Եղանակի հավելված՝ քաղաքների որոնմամբ, ընթացիկ տվյալներով և հնգօրյա կանխատեսմամբ՝ Open-Meteo API-ից։"], ["Երաժշտական նվագարկիչ", "Web Audio նվագարկիչ՝ երեք սինթեզված մեղեդով, իրական pause/resume-ով, ձայնի տեղափոխմամբ և ուժգնության կառավարմամբ։"], ["React առաջադրանքների պլանավորիչ", "React + TypeScript հավելված՝ առաջադրանքներով, ծախսերի խմբագրմամբ, ամսական բյուջեով, որոնմամբ և տեղային պահպանմամբ։"], ["Next.js ուսման բլոգ","Հայերեն բլոգ՝ երեք ուսումնական հոդվածով, առանձին էջերով և էջերի վերնագրերով։"]]
         },
         en: {
             logo: "ARMINE", nav: ["Home", "About", "Skills", "Projects", "Contact"], label: "FRONT-END DEVELOPER", hero: ["Front-End ", "Developer"],
             intro: "I build beautiful, fast, and user-friendly websites with HTML, CSS, and JavaScript.", buttons: ["View projects", "Get in touch"], headings: ["About me", "Skills", "Projects", "Let’s work together"],
             about: ["I’m Armine, a beginner Front-End developer building responsive pages and interactive learning projects with HTML, CSS, and JavaScript.", "My portfolio includes a storefront, dashboard, weather app, music player, and React + TypeScript planner. Through these projects, I’m learning data handling, APIs, accessibility, and Git."],
             skills: ["I build clear, accessible, and semantic website structures.", "I create responsive, modern, and polished interfaces.", "I add interactivity and useful functionality."],
-            projectTexts: [["Online Shop — Modern Shop", "A demo storefront with product search, category filters, and a cart with quantity controls, total calculation, and localStorage persistence."], ["Admin Dashboard", "A demo dashboard with 7/30/90-day filtering, recalculated charts and metrics, an orders list, and CSV export."], ["Weather App", "City search, current weather indicators, and a five-day forecast from the Open-Meteo API."], ["Music Player", "A Web Audio player with three synthesized melodies, working pause/resume, seeking, and volume control."], ["React Task Planner", "A React + TypeScript app with tasks, editable expenses, monthly budgets, search, and local persistence."]],
-            filters: ["All", "Commerce", "Tools", "Creative"], search: "Search projects...", contact: "Send me a message if you would like to collaborate or have a project in mind.", placeholders: ["Your name", "Your email", "Your message"], send: "Send message", modal: "Open project", stats: ["Projects built", "Core skills", "Interface languages"], modalProjects: [["Modern Shop", "A demo storefront with product search, category filters, and a cart with quantity controls, total calculation, and localStorage persistence."], ["Admin Dashboard", "A demo dashboard with 7/30/90-day filtering, recalculated charts and metrics, an orders list, and CSV export."], ["Weather App", "City search, current weather indicators, and a five-day forecast from the Open-Meteo API."], ["Music Player", "A Web Audio player with three synthesized melodies, working pause/resume, seeking, and volume control."], ["React Task Planner", "A React + TypeScript app with tasks, editable expenses, monthly budgets, search, and local persistence."]]
+            projectTexts: [["Online Shop — Modern Shop", "A demo storefront with product search, category filters, and a cart with quantity controls, total calculation, and localStorage persistence."], ["Admin Dashboard", "A demo dashboard with 7/30/90-day filtering, recalculated charts and metrics, an orders list, and CSV export."], ["Weather App", "City search, current weather indicators, and a five-day forecast from the Open-Meteo API."], ["Music Player", "A Web Audio player with three synthesized melodies, working pause/resume, seeking, and volume control."], ["React Task Planner", "A React + TypeScript app with tasks, editable expenses, monthly budgets, search, and local persistence."], ["Next.js Learning Blog","An Armenian learning blog with three articles, individual pages, and page metadata."]],
+            filters: ["All", "Commerce", "Tools", "Creative"], search: "Search projects...", contact: "Send me a message if you would like to collaborate or have a project in mind.", placeholders: ["Your name", "Your email", "Your message"], send: "Send message", modal: "Open project", stats: ["Projects built", "Core skills", "Interface languages"], modalProjects: [["Modern Shop", "A demo storefront with product search, category filters, and a cart with quantity controls, total calculation, and localStorage persistence."], ["Admin Dashboard", "A demo dashboard with 7/30/90-day filtering, recalculated charts and metrics, an orders list, and CSV export."], ["Weather App", "City search, current weather indicators, and a five-day forecast from the Open-Meteo API."], ["Music Player", "A Web Audio player with three synthesized melodies, working pause/resume, seeking, and volume control."], ["React Task Planner", "A React + TypeScript app with tasks, editable expenses, monthly budgets, search, and local persistence."], ["Next.js Learning Blog","An Armenian learning blog with three articles, individual pages, and page metadata."]]
         }
     };
 
@@ -180,7 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function setLanguage(language) {
         if (language === "ru") {
-            const russianModalProjects = [["Modern Shop", "Учебная витрина: поиск товаров, фильтры категорий и корзина с изменением количества, расчётом суммы и сохранением в localStorage."], ["Admin Dashboard", "Демо dashboard: фильтрация за 7/30/90 дней, пересчёт диаграммы и показателей, список заказов и экспорт CSV."], ["Приложение погоды", "Погода с поиском города, текущими показателями и пятидневным прогнозом из Open-Meteo API."], ["Музыкальный плеер", "Web Audio плеер: три синтезированные мелодии, настоящая пауза и продолжение, перемотка и регулировка громкости."], ["Планировщик задач на React", "Приложение React + TypeScript: задачи, редактирование расходов, месячный бюджет, поиск и локальное хранение."]];
+            const russianModalProjects = [["Modern Shop", "Учебная витрина: поиск товаров, фильтры категорий и корзина с изменением количества, расчётом суммы и сохранением в localStorage."], ["Admin Dashboard", "Демо dashboard: фильтрация за 7/30/90 дней, пересчёт диаграммы и показателей, список заказов и экспорт CSV."], ["Приложение погоды", "Погода с поиском города, текущими показателями и пятидневным прогнозом из Open-Meteo API."], ["Музыкальный плеер", "Web Audio плеер: три синтезированные мелодии, настоящая пауза и продолжение, перемотка и регулировка громкости."], ["Планировщик задач на React", "Приложение React + TypeScript: задачи, редактирование расходов, месячный бюджет, поиск и локальное хранение."], ["Учебный блог на Next.js","Блог на армянском: три учебные статьи, отдельные страницы и метаданные."]];
             Object.values(projects).forEach((project, index) => { project.title = russianModalProjects[index][0]; project.description = russianModalProjects[index][1]; });
             document.documentElement.lang = "ru";
             applyRussianContent();
@@ -207,10 +210,11 @@ document.addEventListener("DOMContentLoaded", () => {
         };
         document.title = pageTitles[language];
         languageButtons.forEach((button) => button.classList.toggle("active", button.dataset.language === language));
-        localStorage.setItem("portfolio-language", language);
+        Frontend.storage.setItem("portfolio-language", language);
     }
 
-    setLanguage(localStorage.getItem("portfolio-language") || "hy");
+    const storedLanguage = Frontend.storage.getItem("portfolio-language");
+    setLanguage(["hy", "ru", "en"].includes(storedLanguage) ? storedLanguage : "hy");
     languageButtons.forEach((button) => button.addEventListener("click", () => setLanguage(button.dataset.language)));
 
     const menuButton = document.getElementById("menu-toggle");
@@ -261,7 +265,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     projectSearch?.addEventListener("input", updateProjects);
 
-    const savedProjects = new Set(JSON.parse(localStorage.getItem("saved-projects") || "[]"));
+    const savedData = Frontend.storage.json("saved-projects", []);
+    const savedProjects = new Set(Array.isArray(savedData) ? savedData.filter(id => typeof id === "string" && Object.hasOwn(projects, id)) : []);
     const saveButtons = document.querySelectorAll(".project-save");
     function updateSaveButton(button) {
         const isSaved = savedProjects.has(button.dataset.projectId);
@@ -275,8 +280,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const projectId = button.dataset.projectId;
             if (savedProjects.has(projectId)) savedProjects.delete(projectId);
             else savedProjects.add(projectId);
-            localStorage.setItem("saved-projects", JSON.stringify([...savedProjects]));
+            Frontend.storage.setItem("saved-projects", JSON.stringify([...savedProjects]));
             updateSaveButton(button);
+            updateProjects();
         });
     });
 
@@ -347,11 +353,19 @@ document.addEventListener("DOMContentLoaded", () => {
         event.preventDefault();
         if (!contactForm.checkValidity()) return contactForm.reportValidity();
 
+        if (!document.getElementById("name").value.trim() || !document.getElementById("message-input").value.trim()) {
+            message.textContent = {hy:"Լրացրու անունը և հաղորդագրությունը։",ru:"Введите имя и сообщение.",en:"Enter your name and message."}[document.documentElement.lang];
+            return;
+        }
         const name = document.getElementById("name")?.value.trim() || "there";
+        const copy = {hy:{sending:"Ուղարկվում է…",success: name => `Շնորհակալություն, ${name}։ Հաղորդագրությունն ուղարկված է։`,error:"Չհաջողվեց ուղարկել։ Ստուգիր կապը և փորձիր կրկին։"},ru:{sending:"Отправка…",success:name => `Спасибо, ${name}! Сообщение отправлено.`,error:"Не удалось отправить. Проверьте связь и повторите."},en:{sending:"Sending…",success:name => `Thank you, ${name}! Your message has been sent.`,error:"Could not send. Check your connection and try again."}}[document.documentElement.lang];
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 15000);
+        contactForm.setAttribute("aria-busy", "true");
         const originalButtonText = contactSubmit?.textContent;
         if (contactSubmit) {
             contactSubmit.disabled = true;
-            contactSubmit.textContent = "Sending...";
+            contactSubmit.textContent = copy.sending;
         }
         if (message) {
             message.className = "";
@@ -362,21 +376,24 @@ document.addEventListener("DOMContentLoaded", () => {
             const response = await fetch(contactForm.action, {
                 method: "POST",
                 body: new FormData(contactForm),
-                headers: { Accept: "application/json" }
+                headers: { Accept: "application/json" },
+                signal: controller.signal
             });
             if (!response.ok) throw new Error("Form submission failed");
 
             if (message) {
                 message.className = "success";
-                message.textContent = `Thank you, ${name}! Your message has been sent.`;
+                message.textContent = copy.success(name);
             }
             contactForm.reset();
         } catch (error) {
             if (message) {
                 message.className = "error";
-                message.textContent = "Sorry, your message could not be sent. Please try again.";
+                message.textContent = copy.error;
             }
         } finally {
+            clearTimeout(timeout);
+            contactForm.setAttribute("aria-busy", "false");
             if (contactSubmit) {
                 contactSubmit.disabled = false;
                 contactSubmit.textContent = originalButtonText;
@@ -411,7 +428,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateScrollUi();
     window.addEventListener("scroll", updateScrollUi, { passive: true });
     window.addEventListener("resize", updateScrollUi);
-    backToTopButton?.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+    backToTopButton?.addEventListener("click", () => window.scrollTo({ top: 0, behavior: heroMotion.matches ? "auto" : "smooth" }));
 
     const revealItems = document.querySelectorAll(".section-title, .about-content, .skill-card, .project-card, .contact-content");
     revealItems.forEach((item) => item.classList.add("reveal"));
@@ -432,7 +449,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const target = Number(stat.dataset.target);
             const suffix = stat.dataset.suffix ?? "+";
             const startTime = performance.now();
-            const duration = 1100;
+            const duration = heroMotion.matches ? 1 : 1100;
 
             const animateNumber = (time) => {
                 const progress = Math.min((time - startTime) / duration, 1);

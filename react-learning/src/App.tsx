@@ -1,11 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { lazy, Suspense, useEffect, useRef } from "react";
 import { HashRouter, Link, NavLink, Route, Routes, useLocation } from "react-router";
 import { PlannerProvider, usePlanner } from "./PlannerContext.tsx";
-import TasksPage from "./pages/TasksPage.tsx";
-import StatsPage from "./pages/StatsPage.tsx";
-import ExamplesPage from "./pages/ExamplesPage.tsx";
-import ExpensesPage from "./pages/ExpensesPage.tsx";
-import AccountPage from "./pages/AccountPage.tsx";
+const TasksPage = lazy(() => import("./pages/TasksPage.tsx"));
+const StatsPage = lazy(() => import("./pages/StatsPage.tsx"));
+const ExamplesPage = lazy(() => import("./pages/ExamplesPage.tsx"));
+const ExpensesPage = lazy(() => import("./pages/ExpensesPage.tsx"));
+const AccountPage = lazy(() => import("./pages/AccountPage.tsx"));
 import { AuthProvider } from "./AuthContext.tsx";
 
 function Layout() {
@@ -19,12 +19,15 @@ function Layout() {
     window.scrollTo(0, 0);
   }, [location.pathname]);
   return <div className="app-shell">
+    <a className="skip-link" href="#planner-main">Անցնել բովանդակությանը</a>
     <header className="app-header"><a className="back-link" href="../index.html#projects">← Պորտֆոլիո</a><button onClick={toggleTheme} aria-pressed={theme === "light"}>{theme === "dark" ? "☀ Բաց թեմա" : "☾ Մուգ թեմա"}</button></header>
     <p className="eyebrow">REACT + TYPESCRIPT · ԻՄ ՕՐԸ</p>
     <nav className="app-nav" aria-label="Պլանավորիչի էջեր"><NavLink to="/" end>Առաջադրանքներ</NavLink><NavLink to="/stats">Առաջընթաց</NavLink><NavLink to="/expenses">Ծախսեր</NavLink><NavLink to="/examples">API օրինակներ</NavLink><NavLink to="/account">Իմ հաշիվը</NavLink></nav>
-    <main ref={content} tabIndex={-1}>
+    <main id="planner-main" ref={content} tabIndex={-1}>
+      <Suspense fallback={<p role="status">Էջը բեռնվում է…</p>}>
       <Routes><Route path="/" element={<TasksPage />} /><Route path="/stats" element={<StatsPage />} /><Route path="/expenses" element={<ExpensesPage />} /><Route path="/examples" element={<ExamplesPage />} /><Route path="/account" element={<AccountPage />} /><Route path="*" element={<section><h1>Էջը չի գտնվել</h1><Link to="/">Վերադառնալ առաջադրանքներին</Link></section>} /></Routes>
       {notice && <p role="status">{notice}</p>}
+      </Suspense>
     </main>
   </div>;
 }

@@ -60,9 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // VARIABLES
     // =========================
 
-    let cart = JSON.parse(
-        localStorage.getItem("armineShopCart")
-    ) || [];
+    let cart = Frontend.normalizeCart(Frontend.storage.json("armineShopCart", []), products);
 
     let currentCategory = "all";
 
@@ -539,7 +537,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function saveCart() {
 
-        localStorage.setItem(
+        Frontend.storage.setItem(
             "armineShopCart",
             JSON.stringify(cart)
         );

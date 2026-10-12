@@ -24,7 +24,10 @@ jobs:
         with:
           node-version: '24'
           cache: npm
-          cache-dependency-path: react-learning/package-lock.json
+          cache-dependency-path: |
+            package-lock.json
+            react-learning/package-lock.json
+            next-blog/package-lock.json
       - name: Configure Pages
         id: pages
         uses: actions/configure-pages@v5
@@ -36,8 +39,25 @@ jobs:
         env:
           PAGES_BASE: ${{ steps.pages.outputs.base_path }}
         run: npm --prefix react-learning run build -- --base="$PAGES_BASE/react-planner/" --outDir ../.site-dist/react-planner --emptyOutDir
+      - name: Install Next.js dependencies
+        run: npm --prefix next-blog ci
+      - name: Build Next.js blog
+        env:
+          PAGES_BASE: ${{ steps.pages.outputs.base_path }}
+        run: npm --prefix next-blog run build
       - name: Include portfolio and CV
         run: node scripts/prepare-static.mjs
+      - name: Install frontend test tools
+        run: npm ci
+      - name: Frontend unit tests
+        run: npm test
+      - name: Install test browser
+        run: npx playwright install --with-deps chromium
+      - name: Browser tests
+        env:
+          # Browser tests serve at the root, while this build may use a Pages prefix.
+          TEST_PAGES_BASE: ${{ steps.pages.outputs.base_path }}
+        run: npm run test:e2e
       - uses: actions/upload-pages-artifact@v4
         with:
           path: .site-dist

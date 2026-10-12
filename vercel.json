@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "installCommand": "npm --prefix react-learning ci",
-  "buildCommand": "npm --prefix react-learning run build -- --base=/react-planner/ --outDir ../.site-dist/react-planner --emptyOutDir && node scripts/prepare-static.mjs",
+  "installCommand": "npm --prefix react-learning ci && npm --prefix next-blog ci",
+  "buildCommand": "npm --prefix react-learning run build -- --base=/react-planner/ --outDir ../.site-dist/react-planner --emptyOutDir && npm --prefix next-blog run build && node scripts/prepare-static.mjs",
   "outputDirectory": ".site-dist"
 }
