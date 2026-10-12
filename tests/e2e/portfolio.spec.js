@@ -26,7 +26,7 @@ for (const width of [360, 768, 1440]) {
   test(`pages fit a ${width}px viewport`, async ({page}) => {
     await page.setViewportSize({width,height:900});
     for (const path of ["/", "/shop.html", "/dashboard.html", "/weather.html", "/music.html", "/next-blog/", "/react-planner/", "/cv.html", "/case-study.html?project=blog"]) {
-      await page.route("https://**", route => route.abort());
+      await page.route(url => url.protocol === "https:", route => route.abort());
       await page.goto(path);
       const layout = await page.evaluate(() => ({fits:document.documentElement.scrollWidth <= innerWidth + 1, overflow:[...document.querySelectorAll("body *")].filter(el => el.getBoundingClientRect().right > innerWidth + 1 && getComputedStyle(el).position !== "fixed").slice(0,8).map(el => ({tag:el.tagName,class:el.className,width:el.getBoundingClientRect().width}))}));
       expect(layout.fits, `${path}: ${JSON.stringify(layout.overflow)}`).toBe(true);
@@ -70,14 +70,19 @@ test("contact form reports network errors and restores its submit button", async
   await expect(page.locator("#contact-form")).toHaveAttribute("aria-busy", "false");
 });
 test("weather network failure displays an error without fake readings", async ({page}) => {
-  await page.route("https://**", route => route.abort());
+  let blockedRequests = 0;
+  await page.route(url => url.hostname.endsWith(".open-meteo.com"), route => {
+    blockedRequests += 1;
+    return route.abort("failed");
+  });
   await page.goto("/weather.html");
   await expect(page.locator("#weather-status")).toContainText("Could not connect");
   await expect(page.locator(".weather-info")).toBeHidden();
   await expect(page.locator(".weather-card")).toHaveAttribute("aria-busy", "false");
+  expect(blockedRequests).toBeGreaterThan(0);
 });
 test("project accessibility checks", async ({page}) => {
-  await page.route("https://**", route => route.abort());
+  await page.route(url => url.protocol === "https:", route => route.abort());
   for (const path of ["/", "/shop.html", "/dashboard.html", "/weather.html", "/music.html", "/react-planner/", "/cv.html", "/case-study.html?project=blog"]) {
     await page.goto(path);
     const result = await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa"]).analyze();
