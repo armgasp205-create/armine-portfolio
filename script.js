@@ -1,4 +1,51 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const profiles = {
+    "hy": {
+        "intro": "Ես Արմինեն եմ՝ սկսնակ Front-End ծրագրավորող։ Ստեղծում եմ տարբեր էկրաններին հարմար կայքեր և ինտերակտիվ ուսումնական հավելվածներ՝ HTML, CSS, JavaScript և React տեխնոլոգիաներով։",
+        "about": [
+            "Իմ նախագծերում օգտագործում եմ HTML, CSS, JavaScript, React, TypeScript և Next.js։ Սովորում եմ կառուցել հասանելի ինտերֆեյսներ, աշխատել API-ների հետ և ստուգել հավելվածների աշխատանքը։",
+            "Իմ պորտֆոլիոն ներառում է վեց ուսումնական նախագիծ՝ խանութ, կառավարման վահանակ, եղանակի հավելված, երաժշտական նվագարկիչ, React + TypeScript պլանավորիչ և Next.js բլոգ։ Դրանց միջոցով զարգացնում եմ տվյալների կառավարման, թեստավորման և Git-ի հմտություններս։"
+        ],
+        "skills": [
+            "Իմաստային կառուցվածք, ձևեր և հասանելի բովանդակություն։",
+            "Flexbox, Grid և տարբեր էկրաններին հարմար ձևավորում։",
+            "Իրադարձություններ, որոնում, API հարցումներ և տվյալների պահպանում։",
+            "Կոմպոնենտներ, props, state և էջերի նավիգացիա։",
+            "Տվյալների տիպեր և սխալների հայտնաբերում մինչև գործարկումը։",
+            "App Router, հոդվածների էջեր, metadata և ստատիկ արտահանում։"
+        ]
+    },
+    "ru": {
+        "intro": "Я Армине, начинающий Front-End разработчик. Создаю адаптивные сайты и интерактивные учебные приложения с HTML, CSS, JavaScript и React.",
+        "about": [
+            "В проектах использую HTML, CSS, JavaScript, React, TypeScript и Next.js. Учусь создавать доступные интерфейсы, работать с API и проверять приложения.",
+            "В портфолио шесть учебных проектов: магазин, панель управления, приложение погоды, музыкальный плеер, планировщик React + TypeScript и блог Next.js. На них развиваю навыки управления данными, тестирования и работы с Git."
+        ],
+        "skills": [
+            "Семантическая структура, формы и доступный контент.",
+            "Flexbox, Grid и адаптивное оформление для разных экранов.",
+            "События, поиск, API-запросы и хранение данных.",
+            "Компоненты, props, state и навигация между страницами.",
+            "Типы данных и поиск ошибок до запуска приложения.",
+            "App Router, страницы статей, метаданные и статический экспорт."
+        ]
+    },
+    "en": {
+        "intro": "I’m Armine, a beginner Front-End developer. I build responsive websites and interactive learning projects with HTML, CSS, JavaScript, and React.",
+        "about": [
+            "My projects use HTML, CSS, JavaScript, React, TypeScript, and Next.js. I’m learning to build accessible interfaces, work with APIs, and test applications.",
+            "My portfolio contains six learning projects: a storefront, dashboard, weather app, music player, React + TypeScript planner, and Next.js blog. They help me develop my data handling, testing, and Git skills."
+        ],
+        "skills": [
+            "Semantic structure, forms, and accessible content.",
+            "Flexbox, Grid, and responsive layouts for different screens.",
+            "Events, search, API requests, and data persistence.",
+            "Components, props, state, and page navigation.",
+            "Data types and catching errors before running the app.",
+            "App Router, article pages, metadata, and static export."
+        ]
+    }
+};
     const body = document.body;
     const themeButton = document.getElementById("theme-toggle");
     const modal = document.getElementById("project-modal");
@@ -96,14 +143,14 @@ document.addEventListener("DOMContentLoaded", () => {
             name.textContent = "разработчик";
             heroTitle.replaceChildren("Front-End ", name);
         }
-        setText(".hero-content p", "Я создаю красивые, быстрые и удобные сайты с помощью HTML, CSS и JavaScript.");
+        setText(".hero-content p", profiles.ru.intro);
         ["Смотреть проекты", "Связаться"].forEach((text, index) => setText(`.hero-buttons .btn:nth-child(${index + 1})`, text));
         const headings = document.querySelectorAll(".section-title h2");
         ["Обо мне", "Навыки", "Проекты", "Давайте сотрудничать"].forEach((text, index) => { if (headings[index]) headings[index].textContent = text; });
         const about = document.querySelectorAll(".about-text p");
-        if (about[0]) about[0].textContent = "Меня зовут Армине, я начинающий Front-End разработчик. Создаю адаптивные страницы и интерактивные учебные приложения с HTML, CSS и JavaScript.";
-        if (about[1]) about[1].textContent = "В моём портфолио — магазин, dashboard, приложение погоды, музыкальный плеер и планировщик на React + TypeScript. На этих проектах изучаю управление данными, API, доступность и Git.";
-        const skillDescriptions = ["Создаю понятную и доступную структуру сайтов.", "Делаю адаптивные, современные и красивые интерфейсы.", "Добавляю интерактивность и полезные функции."];
+        if (about[0]) about[0].textContent = profiles.ru.about[0];
+        if (about[1]) about[1].textContent = profiles.ru.about[1];
+        const skillDescriptions = profiles.ru.skills;
         document.querySelectorAll(".skill-card p").forEach((paragraph, index) => paragraph.textContent = skillDescriptions[index]);
         const projectTexts = [["Интернет-магазин — Modern Shop", "Учебная витрина: поиск товаров, фильтры категорий и корзина с изменением количества, расчётом суммы и сохранением в localStorage."], ["Admin Dashboard", "Демо dashboard: фильтрация за 7/30/90 дней, пересчёт диаграммы и показателей, список заказов и экспорт CSV."], ["Приложение погоды", "Погода с поиском города, текущими показателями и пятидневным прогнозом из Open-Meteo API."], ["Музыкальный плеер", "Web Audio плеер: три синтезированные мелодии, настоящая пауза и продолжение, перемотка и регулировка громкости."], ["Планировщик задач на React", "Приложение React + TypeScript: задачи, редактирование расходов, месячный бюджет, поиск и локальное хранение."], ["Учебный блог на Next.js","Блог на армянском: три учебные статьи, отдельные страницы и метаданные."]];
         document.querySelectorAll(".project-card").forEach((card, index) => {
@@ -141,17 +188,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const alternateLanguages = {
         hy: {
             logo: "ԱՐՄԻՆԵ", nav: ["Գլխավոր", "Իմ մասին", "Հմտություններ", "Նախագծեր", "Կապ"], label: "FRONT-END ՄՇԱԿՈՂ", hero: ["Front-End ", "ծրագրավորող"],
-            intro: "Ես ստեղծում եմ գեղեցիկ, արագ և հարմարավետ կայքեր HTML, CSS և JavaScript-ով։", buttons: ["Տեսնել նախագծերը", "Կապ հաստատել"], headings: ["Իմ մասին", "Հմտություններ", "Նախագծեր", "Եկեք համագործակցենք"],
-            about: ["Ես Արմինեն եմ՝ սկսնակ Front-End ծրագրավորող։ HTML, CSS և JavaScript-ով կառուցում եմ responsive էջեր և ինտերակտիվ ուսումնական հավելվածներ։", "Իմ պորտֆոլիոն ներառում է խանութ, dashboard, եղանակի հավելված, երաժշտական նվագարկիչ և React + TypeScript պլանավորիչ։ Նախագծերի միջոցով ուսումնասիրում եմ տվյալների կառավարումը, API-ները, մատչելիությունը և Git-ի աշխատանքը։"],
-            skills: ["Ստեղծում եմ հասանելի ու ճիշտ կառուցվածքով կայքեր։", "Պատրաստում եմ responsive, ժամանակակից և գեղեցիկ ինտերֆեյսներ։", "Ավելացնում եմ ինտերակտիվություն և օգտակար հնարավորություններ։"],
+            intro: profiles.hy.intro, buttons: ["Տեսնել նախագծերը", "Կապ հաստատել"], headings: ["Իմ մասին", "Հմտություններ", "Նախագծեր", "Եկեք համագործակցենք"],
+            about: profiles.hy.about,
+            skills: profiles.hy.skills,
             projectTexts: [["Առցանց խանութ — Modern Shop", "Ուսումնական խանութ՝ ապրանքների որոնմամբ, կատեգորիաների զտմամբ և զամբյուղով՝ քանակի փոփոխություն, գումարի հաշվարկ ու պահպանում localStorage-ում։"], ["Admin Dashboard", "Ցուցադրական dashboard՝ 7/30/90 օրվա զտմամբ, վերահաշվարկվող գրաֆիկով ու ցուցանիշներով, պատվերների ցանկով և CSV ներբեռնմամբ։"], ["Եղանակի հավելված", "Եղանակի հավելված՝ քաղաքների որոնմամբ, ընթացիկ տվյալներով և հնգօրյա կանխատեսմամբ՝ Open-Meteo API-ից։"], ["Երաժշտական նվագարկիչ", "Web Audio նվագարկիչ՝ երեք սինթեզված մեղեդով, իրական pause/resume-ով, ձայնի տեղափոխմամբ և ուժգնության կառավարմամբ։"], ["React առաջադրանքների պլանավորիչ", "React + TypeScript հավելված՝ առաջադրանքներով, ծախսերի խմբագրմամբ, ամսական բյուջեով, որոնմամբ և տեղային պահպանմամբ։"], ["Next.js ուսման բլոգ","Հայերեն բլոգ՝ երեք ուսումնական հոդվածով, առանձին էջերով և էջերի վերնագրերով։"]],
             filters: ["Բոլորը", "Խանութ", "Գործիքներ", "Ստեղծարար"], search: "Որոնել նախագծեր...", contact: "Գրիր ինձ, եթե ցանկանում ես համագործակցել կամ ունես նոր գաղափար։", placeholders: ["Քո անունը", "Քո email-ը", "Քո հաղորդագրությունը"], send: "Ուղարկել հաղորդագրությունը", modal: "Բացել նախագիծ", stats: ["Ստեղծված նախագծեր", "Հիմնական հմտություններ", "Կայքի լեզուներ"], modalProjects: [["Modern Shop", "Ուսումնական խանութ՝ ապրանքների որոնմամբ, կատեգորիաների զտմամբ և զամբյուղով՝ քանակի փոփոխություն, գումարի հաշվարկ ու պահպանում localStorage-ում։"], ["Admin Dashboard", "Ցուցադրական dashboard՝ 7/30/90 օրվա զտմամբ, վերահաշվարկվող գրաֆիկով ու ցուցանիշներով, պատվերների ցանկով և CSV ներբեռնմամբ։"], ["Եղանակի հավելված", "Եղանակի հավելված՝ քաղաքների որոնմամբ, ընթացիկ տվյալներով և հնգօրյա կանխատեսմամբ՝ Open-Meteo API-ից։"], ["Երաժշտական նվագարկիչ", "Web Audio նվագարկիչ՝ երեք սինթեզված մեղեդով, իրական pause/resume-ով, ձայնի տեղափոխմամբ և ուժգնության կառավարմամբ։"], ["React առաջադրանքների պլանավորիչ", "React + TypeScript հավելված՝ առաջադրանքներով, ծախսերի խմբագրմամբ, ամսական բյուջեով, որոնմամբ և տեղային պահպանմամբ։"], ["Next.js ուսման բլոգ","Հայերեն բլոգ՝ երեք ուսումնական հոդվածով, առանձին էջերով և էջերի վերնագրերով։"]]
         },
         en: {
             logo: "ARMINE", nav: ["Home", "About", "Skills", "Projects", "Contact"], label: "FRONT-END DEVELOPER", hero: ["Front-End ", "Developer"],
-            intro: "I build beautiful, fast, and user-friendly websites with HTML, CSS, and JavaScript.", buttons: ["View projects", "Get in touch"], headings: ["About me", "Skills", "Projects", "Let’s work together"],
-            about: ["I’m Armine, a beginner Front-End developer building responsive pages and interactive learning projects with HTML, CSS, and JavaScript.", "My portfolio includes a storefront, dashboard, weather app, music player, and React + TypeScript planner. Through these projects, I’m learning data handling, APIs, accessibility, and Git."],
-            skills: ["I build clear, accessible, and semantic website structures.", "I create responsive, modern, and polished interfaces.", "I add interactivity and useful functionality."],
+            intro: profiles.en.intro, buttons: ["View projects", "Get in touch"], headings: ["About me", "Skills", "Projects", "Let’s work together"],
+            about: profiles.en.about,
+            skills: profiles.en.skills,
             projectTexts: [["Online Shop — Modern Shop", "A demo storefront with product search, category filters, and a cart with quantity controls, total calculation, and localStorage persistence."], ["Admin Dashboard", "A demo dashboard with 7/30/90-day filtering, recalculated charts and metrics, an orders list, and CSV export."], ["Weather App", "City search, current weather indicators, and a five-day forecast from the Open-Meteo API."], ["Music Player", "A Web Audio player with three synthesized melodies, working pause/resume, seeking, and volume control."], ["React Task Planner", "A React + TypeScript app with tasks, editable expenses, monthly budgets, search, and local persistence."], ["Next.js Learning Blog","An Armenian learning blog with three articles, individual pages, and page metadata."]],
             filters: ["All", "Commerce", "Tools", "Creative"], search: "Search projects...", contact: "Send me a message if you would like to collaborate or have a project in mind.", placeholders: ["Your name", "Your email", "Your message"], send: "Send message", modal: "Open project", stats: ["Projects built", "Core skills", "Interface languages"], modalProjects: [["Modern Shop", "A demo storefront with product search, category filters, and a cart with quantity controls, total calculation, and localStorage persistence."], ["Admin Dashboard", "A demo dashboard with 7/30/90-day filtering, recalculated charts and metrics, an orders list, and CSV export."], ["Weather App", "City search, current weather indicators, and a five-day forecast from the Open-Meteo API."], ["Music Player", "A Web Audio player with three synthesized melodies, working pause/resume, seeking, and volume control."], ["React Task Planner", "A React + TypeScript app with tasks, editable expenses, monthly budgets, search, and local persistence."], ["Next.js Learning Blog","An Armenian learning blog with three articles, individual pages, and page metadata."]]
         }
