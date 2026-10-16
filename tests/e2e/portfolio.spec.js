@@ -1,5 +1,26 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
+test("mobile theme works with legacy Safari media listeners and blocked storage", async ({browser}) => {
+  const context = await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
+  try {
+    await context.addInitScript(() => {
+      const original = window.matchMedia.bind(window);
+      window.matchMedia = query => { const media = original(query); media.addEventListener = undefined; return media; };
+      Object.defineProperty(window, "localStorage", {get() {throw new Error("Storage unavailable");}});
+    });
+    const page = await context.newPage();
+    await page.goto("/");
+    const theme = page.locator("#theme-toggle");
+    await theme.tap();
+    await expect(page.locator("body")).toHaveClass(/light-mode/);
+    await expect(theme).toHaveAttribute("aria-pressed", "true");
+    await theme.tap();
+    await expect(page.locator("body")).not.toHaveClass(/light-mode/);
+    const themeBox = await theme.boundingBox();
+    const menuBox = await page.locator("#menu-toggle").boundingBox();
+    expect(Math.abs(themeBox.y - menuBox.y)).toBeLessThan(1);
+  } finally { await context.close(); }
+});
 test("portfolio survives corrupt saved projects, filters and keyboard dialog work", async ({page}) => {
   await page.addInitScript(() => localStorage.setItem("saved-projects", "{"));
   await page.goto("/");

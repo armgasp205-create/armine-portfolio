@@ -113,7 +113,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         heroTypingTimer = window.setTimeout(tick, 2200);
     }
-    heroMotion.addEventListener("change", () => animateHero(document.documentElement.lang));
+    const updateHeroMotion = () => animateHero(document.documentElement.lang);
+    if (typeof heroMotion.addEventListener === "function") {
+        heroMotion.addEventListener("change", updateHeroMotion);
+    } else {
+        heroMotion.addListener?.(updateHeroMotion);
+    }
     function setTheme(isLight) {
         body.classList.toggle("light-mode", isLight);
         themeButton?.setAttribute("aria-pressed", String(isLight));
