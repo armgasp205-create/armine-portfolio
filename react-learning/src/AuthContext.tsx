@@ -20,6 +20,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     let alive = true;
     let changed = false;
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if(_event==="PASSWORD_RECOVERY")window.location.hash="/account";
       changed = true;
       if (alive) setState({ session, loading: false, error: "" });
     });

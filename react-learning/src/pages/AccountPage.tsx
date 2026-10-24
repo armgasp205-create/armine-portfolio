@@ -2,6 +2,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { useAuth } from "../AuthContext.tsx";
 import { supabase } from "../supabase.ts";
 import { publicConfig } from "../public-config.ts";
+import { authErrorMessage } from "../auth-errors.ts";
 import { readSnapshot, restoreSnapshot, validateSnapshot } from "../cloud-data.ts";
 
 export default function AccountPage() {
@@ -9,6 +10,8 @@ export default function AccountPage() {
   const [mode, setMode] = useState<"login" | "signup">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [newPassword,setNewPassword]=useState("");
+  const [confirmPassword,setConfirmPassword]=useState("");
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -18,7 +21,7 @@ export default function AccountPage() {
     let saved = 0;
     try { saved = Number(sessionStorage.getItem(`planner-cloud-version-${session?.user.id}`) || 0); } catch {}
     setVersion(Number.isSafeInteger(saved) && saved >= 0 ? saved : 0);
-    setMessage(""); setError(""); setRestorePending(false); setPassword("");
+    setMessage(""); setError(""); setRestorePending(false); setPassword(""); setNewPassword(""); setConfirmPassword("");
   }, [session?.user.id]);
   if (!supabase) return <section><h1>Իմ հաշիվը</h1><p>Առցանց պահպանումը դեռ միացված չէ։ Կարող ես շարունակել օգտվել առաջադրանքներից և ծախսերից՝ այս բրաուզերում պահպանմամբ։</p><p>Մուտքն ու երկու սարքերի միջև տվյալների փոխանցումը հասանելի կլինեն ծառայությունը միացնելուց հետո։</p></section>;
   const client = supabase;
@@ -31,8 +34,29 @@ export default function AccountPage() {
       if (result.error) throw result.error;
       setPassword("");
       if (mode === "signup" && !result.data.session) setMessage("Ստուգիր էլ․ փոստդ՝ գրանցումը հաստատելու համար։ Եթե հաշիվն արդեն կա, փորձիր մուտք գործել։");
-    } catch { setError(mode === "login" ? "Մուտքը չհաջողվեց։ Ստուգիր էլ․ փոստը, գաղտնաբառը և կապը։" : "Գրանցումը չհաջողվեց։ Ստուգիր տվյալներն ու կապը կամ փորձիր ավելի ուշ։"); }
+    } catch(problem) { setError(authErrorMessage(problem)); }
     finally { setBusy(false); }
+  }
+  async function resetPassword() {
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())){setError("Նախ գրիր քո էլ․ հասցեն վերևի դաշտում։");return;}
+    setBusy(true);setError("");setMessage("");
+    try {
+      const {error}=await client.auth.resetPasswordForEmail(email.trim(),{redirectTo:window.location.origin+window.location.pathname});
+      if(error)throw error;
+      setMessage("Եթե այս հասցեով հաշիվ կա, վերականգնման նամակ կստանաս։ Բացիր այն նույն բրաուզերում, հետո «Իմ հաշիվը» էջում գրիր նոր գաղտնաբառը։");
+    } catch(problem) {setError(authErrorMessage(problem));}
+    finally {setBusy(false);}
+  }
+  async function changePassword(event:FormEvent) {
+    event.preventDefault();setError("");setMessage("");
+    if(newPassword!==confirmPassword){setError("Նոր գաղտնաբառերը չեն համընկնում։");return;}
+    setBusy(true);
+    try {
+      const {error}=await client.auth.updateUser({password:newPassword});
+      if(error)throw error;
+      setNewPassword("");setConfirmPassword("");setMessage("Նոր գաղտնաբառը պահպանված է։ Կարող ես բացել կառավարման էջը։");
+    } catch(problem) {setError(authErrorMessage(problem));}
+    finally {setBusy(false);}
   }
   async function sync(action: "save" | "load") {
     if (!session) return;
@@ -74,6 +98,7 @@ export default function AccountPage() {
   return <section><h1>Իմ հաշիվը</h1>
     {loading ? <p role="status">Ստուգում ենք մուտքը…</p> : session ? <>
       <p>Մուտք ես գործել՝ <strong>{session.user.email}</strong></p>
+      <form className="task-form" onSubmit={changePassword}><h2>Փոխել գաղտնաբառը</h2><div className="field"><label htmlFor="new-password">Նոր գաղտնաբառ</label><input id="new-password" type="password" autoComplete="new-password" minLength={8} required value={newPassword} onChange={event=>setNewPassword(event.target.value)} /></div><div className="field"><label htmlFor="confirm-password">Կրկնել նոր գաղտնաբառը</label><input id="confirm-password" type="password" autoComplete="new-password" minLength={8} required value={confirmPassword} onChange={event=>setConfirmPassword(event.target.value)} /></div><button disabled={busy}>Պահպանել նոր գաղտնաբառը</button></form>
       <p>{!document.querySelector('meta[name="portfolio-backend"]') && <><a href="../backend-admin.html">Կառավարում</a> ? </>}<a href="#/backend">Բացել առցանց առաջադրանքները →</a></p>
       {document.querySelector('meta[name="portfolio-backend"]') && <p><a href="#/backend">Իմ սերվերային առաջադրանքները</a> · <a href="/backend-admin.html" onClick={async event => {
         event.preventDefault(); setError("");
@@ -97,6 +122,7 @@ export default function AccountPage() {
     </> : <>
       <div className="filters"><button aria-pressed={mode === "login"} disabled={busy} onClick={() => setMode("login")}>Մուտք</button><button aria-pressed={mode === "signup"} disabled={busy} onClick={() => setMode("signup")}>Գրանցում</button></div>
       <form className="task-form" onSubmit={authenticate}><div className="field task-text-field"><label htmlFor="account-email">Էլ․ փոստ</label><input id="account-email" type="email" autoComplete="email" required value={email} onChange={event => setEmail(event.target.value)} /></div><div className="field task-text-field"><label htmlFor="account-password">Գաղտնաբառ (առնվազն 8 նիշ)</label><input id="account-password" type="password" autoComplete={mode === "login" ? "current-password" : "new-password"} minLength={8} required value={password} onChange={event => setPassword(event.target.value)} /></div><button className="primary" disabled={busy}>{busy ? "Սպասիր…" : mode === "login" ? "Մուտք գործել" : "Գրանցվել"}</button></form>
+      {mode==="login" && <button type="button" disabled={busy} onClick={()=>void resetPassword()}>Մոռացե՞լ ես գաղտնաբառը</button>}
     </>}
     {busy && <p role="status">Կատարվում է…</p>}{(error || authError) && <p className="error" role="alert">{error || authError}</p>}{message && <p role="status">{message}</p>}
   </section>;
