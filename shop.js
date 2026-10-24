@@ -1,4 +1,5 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
+    const escapeHtml=value=>String(value).replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
 
     // =========================
     // PRODUCTS
@@ -60,6 +61,19 @@ document.addEventListener("DOMContentLoaded", function () {
     // VARIABLES
     // =========================
 
+    const localBackend = Boolean(document.querySelector('meta[name="portfolio-backend"]'));
+    if(localBackend) {
+        try {
+            const response=await fetch("/api/products",{signal:AbortSignal.timeout(10000)});
+            if(!response.ok)throw new Error();
+            const data=await response.json();products.splice(0,products.length,...data.products);
+        } catch {
+            document.querySelector("#products-grid").textContent="Ապրանքները սերվերից բեռնել չհաջողվեց։ Թարմացրու էջը։";
+            return;
+        }
+    }
+    let checkoutKey=null;
+    let checkoutPending=false;
     let cart = Frontend.normalizeCart(Frontend.storage.json("armineShopCart", []), products);
 
     let currentCategory = "all";
@@ -192,7 +206,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                             <div class="product-image">
                                 <span class="product-icon">
-                                    ${product.icon}
+                                    ${escapeHtml(product.icon)}
                                 </span>
                             </div>
 
@@ -200,15 +214,15 @@ document.addEventListener("DOMContentLoaded", function () {
                             <div class="product-info">
 
                                 <span class="product-category">
-                                    ${product.category}
+                                    ${escapeHtml(product.category)}
                                 </span>
 
                                 <h3>
-                                    ${product.name}
+                                    ${escapeHtml(product.name)}
                                 </h3>
 
                                 <p>
-                                    ${product.description}
+                                    ${escapeHtml(product.description)}
                                 </p>
 
 
@@ -284,6 +298,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // =========================
 
     function addToCart(productId) {
+        if(checkoutPending)return;
 
         const product =
             products.find(function (item) {
@@ -335,6 +350,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // =========================
 
     function removeFromCart(productId) {
+        if(checkoutPending)return;
 
         cart =
             cart.filter(function (item) {
@@ -362,6 +378,7 @@ document.addEventListener("DOMContentLoaded", function () {
         productId,
         change
     ) {
+        if(checkoutPending)return;
 
         const item =
             cart.find(function (product) {
@@ -433,14 +450,14 @@ document.addEventListener("DOMContentLoaded", function () {
                         <div class="cart-item">
 
                             <div class="cart-item-icon">
-                                ${item.icon}
+                                ${escapeHtml(item.icon)}
                             </div>
 
 
                             <div class="cart-item-info">
 
                                 <h3>
-                                    ${item.name}
+                                    ${escapeHtml(item.name)}
                                 </h3>
 
                                 <strong>
@@ -536,6 +553,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // =========================
 
     function saveCart() {
+        checkoutKey=null;
 
         Frontend.storage.setItem(
             "armineShopCart",
@@ -610,7 +628,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // CHECKOUT
     // =========================
 
-    function checkout() {
+    async function checkout() {
 
         if (cart.length === 0) {
 
@@ -622,6 +640,21 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
+        if(localBackend) {
+            if(checkoutPending)return;
+            checkoutPending=true;
+            checkoutButton.disabled=true;
+            checkoutKey ||= crypto.randomUUID();
+            try {
+                const response=await fetch("/api/orders",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({requestKey:checkoutKey,items:cart.map(item=>({id:item.id,quantity:item.quantity}))}),signal:AbortSignal.timeout(10000)});
+                const data=await response.json();
+                if(!response.ok)throw new Error(data.error);
+                cart=[];saveCart();renderCart();closeCart();checkoutKey=null;
+                showToast(`Պատվերը պահպանված է՝ ${data.order.id.slice(0,8)}։ Վճարում չի կատարվել։`);
+            } catch(error) {showToast(error.message || "Պատվերը չհաջողվեց պահպանել։ Փորձիր կրկին։");}
+            finally {checkoutPending=false;checkoutButton.disabled=false;}
+            return;
+        }
         showToast(
             "Պատվերի ձևավորումը ցուցադրական է 💜"
         );

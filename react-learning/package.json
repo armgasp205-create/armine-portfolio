@@ -4,7 +4,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "test": "node --test src/task-data.test.js src/cloud-data.test.js",
+        "test": "node --test src/task-data.test.js src/cloud-data.test.js src/cloud-tasks.test.js",
         "dev": "vite",
         "build": "tsc --noEmit && vite build",
         "build:portfolio": "tsc --noEmit && vite build --base=/react-planner/ --outDir ../react-planner",

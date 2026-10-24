@@ -1,8 +1,16 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+    const localBackend=Boolean(document.querySelector('meta[name="portfolio-backend"]'));
     const products = [{name: "Nova Headphones", price: 89}, {name: "Smart Watch X", price: 129}, {name: "Urban Backpack", price: 64}, {name: "Classic Sneakers", price: 95}];
     const today = new Date(); today.setHours(12, 0, 0, 0);
     const orders = [];
-    for (let day = 0; day < 90; day++) {
+    if(localBackend) {
+        try {
+            const response=await fetch("/api/orders",{signal:AbortSignal.timeout(10000)});
+            if(!response.ok)throw new Error();
+            const data=await response.json();orders.push(...data.orders.map(order=>({...order,date:new Date(order.date)})));
+        } catch {document.getElementById("dashboard-period-status").textContent="Պատվերները սերվերից բեռնել չհաջողվեց։ Թարմացրու էջը։";return;}
+    }
+    for (let day = 0; !localBackend && day < 90; day++) {
         for (let i = 0; i < 2 + day % 4; i++) {
             const product = products[(day + i) % 4];
             const date = new Date(today); date.setDate(today.getDate() - day);
@@ -40,17 +48,18 @@ document.addEventListener("DOMContentLoaded", () => {
         viewAll.setAttribute("aria-expanded", String(expanded));
     }
     function renderPeriod() {
-        const days = Number(select.value), cutoff = new Date(today); cutoff.setDate(today.getDate() - days + 1);
+        const days = Number(select.value), cutoff = new Date(today); cutoff.setDate(today.getDate() - days + 1);cutoff.setHours(0,0,0,0);
         const status = document.getElementById("order-status-filter").value;
         visible = orders.filter(order => order.date >= cutoff && (status === "all" || order.status === status));
         const completed = visible.filter(order => order.status === "Completed");
         const revenue = completed.reduce((sum, order) => sum + order.amount, 0);
         const metrics = [money(revenue), String(visible.length), String(new Set(visible.map(order => order.customer)).size), String(new Set(visible.map(order => order.product)).size)];
         document.querySelectorAll(".stat-card h2").forEach((element, i) => element.textContent = metrics[i]);
-        document.querySelectorAll(".stat-change").forEach(element => element.textContent = `Last ${days} days · demo`);
+        document.querySelectorAll(".stat-change").forEach(element => element.textContent = `Last ${days} days · ${localBackend ? "saved orders" : "demo"}`);
         const buckets = Array.from({length: 7}, (_, i) => {
             const start = new Date(cutoff), end = new Date(cutoff);
             start.setDate(cutoff.getDate() + Math.floor(i * days / 7)); end.setDate(cutoff.getDate() + Math.floor((i + 1) * days / 7) - 1);
+            end.setHours(23,59,59,999);
             return {start, end, amount: completed.filter(order => order.date >= start && order.date <= end).reduce((sum, order) => sum + order.amount, 0)};
         });
         const ceiling = Math.max(100, Math.ceil(Math.max(...buckets.map(bucket => bucket.amount)) / 100) * 100);
@@ -67,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
             item.querySelector("strong").textContent = percentages[i] + "%";
             item.querySelector(".progress > div").style.width = percentages[i] + "%";
         });
-        document.getElementById("dashboard-period-status").textContent = `Last ${days} days: ${visible.length} sample orders, ${money(revenue)} completed revenue.`;
+        document.getElementById("dashboard-period-status").textContent = `Last ${days} days: ${visible.length} ${localBackend ? "saved" : "sample"} orders, ${money(revenue)} completed ${localBackend ? "order value (no payments)" : "revenue"}.`;
         expanded = false; renderOrders();
     }
     document.getElementById("order-status-filter").addEventListener("change", renderPeriod);
@@ -75,11 +84,24 @@ document.addEventListener("DOMContentLoaded", () => {
     viewAll.addEventListener("click", () => {expanded = !expanded; renderOrders();});
     document.getElementById("export-orders").addEventListener("click", () => {
         const rows = [["Order", "Date", "Customer", "Product", "Amount USD", "Status"], ...visible.map(order => [order.id, order.date.toLocaleDateString("en-GB"), order.customer, order.product, order.amount, order.status])];
-        const csv = rows.map(row => row.map(value => '"' + String(value).replaceAll('"', '""') + '"').join(",")).join("\r\n");
+        const csv = rows.map(row => row.map(value => {let text=String(value);if(/^[\s]*[=+@-]|^[\t\r\n]/.test(text))text="'"+text;return '"'+text.replaceAll('"','""')+'"';}).join(",")).join("\r\n");
         const url = URL.createObjectURL(new Blob([csv], {type: "text/csv;charset=utf-8"}));
-        const link = document.createElement("a"); link.href = url; link.download = `demo-orders-${select.value}-days.csv`;
+        const link = document.createElement("a"); link.href = url; link.download = `${localBackend ? "saved" : "demo"}-orders-${select.value}-days.csv`;
         document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
         const toast = document.getElementById("toast"); clearTimeout(toastTimer); toast.textContent = "Sample orders exported"; toast.classList.add("show"); toastTimer = setTimeout(() => toast.classList.remove("show"), 2500);
     });
     renderPeriod();
+    if(localBackend){
+        let refreshing=false;
+        async function refreshOrders(){
+            if(refreshing||document.hidden)return;refreshing=true;
+            try{
+                const response=await fetch("/api/orders",{cache:"no-store",signal:AbortSignal.timeout(10000)});if(!response.ok)throw new Error();
+                const data=await response.json();orders.splice(0,orders.length,...data.orders.map(order=>({...order,date:new Date(order.date)})));renderPeriod();
+            }catch{document.getElementById("dashboard-period-status").textContent="Տվյալները թարմացնել չհաջողվեց։ Կապը վերականգնելուց հետո կփորձենք կրկին։";}finally{refreshing=false;}
+        }
+        window.addEventListener("storage",event=>{if(event.key==="portfolio-backend-updated")void refreshOrders();});
+        window.addEventListener("focus",()=>void refreshOrders());
+        setInterval(()=>void refreshOrders(),30000);
+    }
 });

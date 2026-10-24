@@ -1,6 +1,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { useAuth } from "../AuthContext.tsx";
 import { supabase } from "../supabase.ts";
+import { publicConfig } from "../public-config.ts";
 import { readSnapshot, restoreSnapshot, validateSnapshot } from "../cloud-data.ts";
 
 export default function AccountPage() {
@@ -73,10 +74,19 @@ export default function AccountPage() {
   return <section><h1>Իմ հաշիվը</h1>
     {loading ? <p role="status">Ստուգում ենք մուտքը…</p> : session ? <>
       <p>Մուտք ես գործել՝ <strong>{session.user.email}</strong></p>
-      <div className="budget-panel"><h2>Տվյալները երկու սարքում</h2><p>Աշխատանքն ավարտելուց հետո պահպանիր առցանց։ Մյուս սարքում բեռնիր տվյալները՝ մինչև փոփոխություններ կատարելը։</p><p className="page-description">Բեռնումը կփոխարինի այս բրաուզերի առաջադրանքները, ծախսերն ու բյուջեները։ Ավտոմատ համաժամացում դեռ չկա։</p>
+      <p><a href="#/backend">Բացել առցանց առաջադրանքները →</a></p>
+      {document.querySelector('meta[name="portfolio-backend"]') && <p><a href="#/backend">Իմ սերվերային առաջադրանքները</a> · <a href="/backend-admin.html" onClick={async event => {
+        event.preventDefault(); setError("");
+        try {
+          const response = await fetch("/api/auth/session", {method:"POST",headers:{Authorization:`Bearer ${session.access_token}`},signal:AbortSignal.timeout(10000)});
+          if(!response.ok) throw new Error("Սերվերը չհաստատեց մուտքը։ Փորձիր նորից մուտք գործել։");
+          window.location.assign("/backend-admin.html");
+        } catch(problem) {setError(problem instanceof Error ? problem.message : "Սերվերին միանալ չհաջողվեց։");}
+      }}>Կառավարման էջ</a></p>}
+      {publicConfig.cloudSnapshotsEnabled && <div className="budget-panel"><h2>Տվյալները երկու սարքում</h2><p>Աշխատանքն ավարտելուց հետո պահպանիր առցանց։ Մյուս սարքում բեռնիր տվյալները՝ մինչև փոփոխություններ կատարելը։</p><p className="page-description">Բեռնումը կփոխարինի այս բրաուզերի առաջադրանքները, ծախսերն ու բյուջեները։ Ավտոմատ համաժամացում դեռ չկա։</p>
         <div className="expense-toolbar"><button className="primary" disabled={busy} onClick={() => sync("save")}>Պահպանել առցանց</button><button disabled={busy} onClick={() => setRestorePending(true)}>Բեռնել առցանցից</button></div>
         {restorePending && <div className="restore-confirm"><p>Փոխարինե՞լ այս սարքի տվյալները առցանց տարբերակով։</p><button disabled={busy} onClick={() => sync("load")}>Այո, բեռնել</button> <button disabled={busy} onClick={() => setRestorePending(false)}>Չեղարկել</button></div>}
-      </div>
+      </div>}
       <button disabled={busy} onClick={async () => {
         setBusy(true); setError("");
         try { const { error } = await client.auth.signOut(); if (error) throw error; }

@@ -7,6 +7,15 @@ const AuthContext = createContext<AuthState>({ session: null, loading: true, err
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<AuthState>({ session: null, loading: !!supabase, error: "" });
   useEffect(() => {
+    if (state.loading || !document.querySelector('meta[name="portfolio-backend"]')) return;
+    const controller = new AbortController();
+    void fetch(state.session ? "/api/auth/session" : "/api/auth/logout", {
+      method: "POST", headers: state.session ? { Authorization: `Bearer ${state.session.access_token}` } : {},
+      signal: controller.signal,
+    }).catch(() => {});
+    return () => controller.abort();
+  }, [state.loading, state.session]);
+  useEffect(() => {
     if (!supabase) return;
     let alive = true;
     let changed = false;

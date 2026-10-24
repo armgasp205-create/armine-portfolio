@@ -425,17 +425,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            const response = await fetch(contactForm.action, {
+            const useLocalBackend=Boolean(document.querySelector('meta[name="portfolio-backend"]'));
+            const response = await fetch(useLocalBackend ? "/api/messages" : contactForm.action, {
                 method: "POST",
-                body: new FormData(contactForm),
-                headers: { Accept: "application/json" },
+                body: useLocalBackend ? JSON.stringify(Object.fromEntries(new FormData(contactForm))) : new FormData(contactForm),
+                headers: useLocalBackend ? {Accept:"application/json","Content-Type":"application/json"} : { Accept: "application/json" },
                 signal: controller.signal
             });
             if (!response.ok) throw new Error("Form submission failed");
 
             if (message) {
                 message.className = "success";
-                message.textContent = copy.success(name);
+                message.textContent = useLocalBackend ? {hy:"Հաղորդագրությունը պահպանվել է տեղական բազայում։",ru:"Сообщение сохранено в локальной базе.",en:"Message saved in the local database."}[document.documentElement.lang] : copy.success(name);
             }
             contactForm.reset();
         } catch (error) {
