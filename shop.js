@@ -61,10 +61,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     // VARIABLES
     // =========================
 
-    const localBackend = Boolean(document.querySelector('meta[name="portfolio-backend"]'));
+    const cloudBackend=Boolean(window.PortfolioCloud?.enabled);
+    const localBackend = cloudBackend || Boolean(document.querySelector('meta[name="portfolio-backend"]'));
     if(localBackend) {
         try {
-            const response=await fetch("/api/products",{signal:AbortSignal.timeout(10000)});
+            const response=cloudBackend ? {ok:true,json:()=>window.PortfolioCloud.request("products")} : await fetch("/api/products",{signal:AbortSignal.timeout(10000)});
             if(!response.ok)throw new Error();
             const data=await response.json();products.splice(0,products.length,...data.products);
         } catch {
@@ -646,7 +647,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             checkoutButton.disabled=true;
             checkoutKey ||= crypto.randomUUID();
             try {
-                const response=await fetch("/api/orders",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({requestKey:checkoutKey,items:cart.map(item=>({id:item.id,quantity:item.quantity}))}),signal:AbortSignal.timeout(10000)});
+                const response=cloudBackend ? {ok:true,json:()=>window.PortfolioCloud.request("orders","POST",{requestKey:checkoutKey,items:cart.map(item=>({id:item.id,quantity:item.quantity}))})} : await fetch("/api/orders",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({requestKey:checkoutKey,items:cart.map(item=>({id:item.id,quantity:item.quantity}))}),signal:AbortSignal.timeout(10000)});
                 const data=await response.json();
                 if(!response.ok)throw new Error(data.error);
                 cart=[];saveCart();renderCart();closeCart();checkoutKey=null;

@@ -28,3 +28,6 @@ Thumbs.db
 test-results/
 playwright-report/
 backend-learning/data/
+
+# Privately applied migration contains the administrator identity.
+/react-learning/supabase/portfolio-commerce.sql

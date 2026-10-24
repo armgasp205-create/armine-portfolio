@@ -425,8 +425,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            const useLocalBackend=Boolean(document.querySelector('meta[name="portfolio-backend"]'));
-            const response = await fetch(useLocalBackend ? "/api/messages" : contactForm.action, {
+            const useCloudBackend=Boolean(window.PortfolioCloud?.enabled);
+            const useLocalBackend=useCloudBackend || Boolean(document.querySelector('meta[name="portfolio-backend"]'));
+            const response = useCloudBackend ? {ok:true,...await window.PortfolioCloud.request("messages","POST",Object.fromEntries(new FormData(contactForm)))} : await fetch(useLocalBackend ? "/api/messages" : contactForm.action, {
                 method: "POST",
                 body: useLocalBackend ? JSON.stringify(Object.fromEntries(new FormData(contactForm))) : new FormData(contactForm),
                 headers: useLocalBackend ? {Accept:"application/json","Content-Type":"application/json"} : { Accept: "application/json" },
@@ -436,7 +437,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (message) {
                 message.className = "success";
-                message.textContent = useLocalBackend ? {hy:"Հաղորդագրությունը պահպանվել է տեղական բազայում։",ru:"Сообщение сохранено в локальной базе.",en:"Message saved in the local database."}[document.documentElement.lang] : copy.success(name);
+                message.textContent = useLocalBackend ? {hy:"Հաղորդագրությունը պահպանվել է տեղական բազայում։",ru:"Сообщение сохранено в локальной базе.",en:"Message saved in the database."}[document.documentElement.lang] : copy.success(name);
             }
             contactForm.reset();
         } catch (error) {

@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded",async()=>{
     const byId=id=>document.getElementById(id);
     const error=byId("admin-error");
     async function api(path,method="GET",body){
+        if(window.PortfolioCloud?.enabled)return window.PortfolioCloud.request(path,method,body);
         const response=await fetch("/api/"+path,{method,headers:body===undefined?undefined:{"Content-Type":"application/json"},body:body===undefined?undefined:JSON.stringify(body),signal:AbortSignal.timeout(10000),cache:"no-store"});
         if(!response.headers.get("content-type")?.includes("application/json"))throw new Error("Բացիր այս էջը http://127.0.0.1:3002/backend-admin.html հասցեով։");
         const data=await response.json();if(!response.ok)throw new Error(data.error||"Սերվերի հարցումը չհաջողվեց։");return data;
@@ -20,7 +21,7 @@ document.addEventListener("DOMContentLoaded",async()=>{
         return;
     }
     const accountLink=element("a","Մուտք գործել / Իմ հաշիվը");
-    accountLink.href="/react-planner/#/account";
+    accountLink.href=window.PortfolioCloud?.url("react-planner/#/account") || "/react-planner/#/account";
     byId("admin-error").before(accountLink);
     try {
         const {user}=await api("auth/me");
@@ -74,7 +75,7 @@ document.addEventListener("DOMContentLoaded",async()=>{
         });
         const articles=byId("posts-list");articles.replaceChildren();
         posts.forEach(post=>{
-            const row=element("li"),link=element("a",post.title);link.href="blog-article.html?id="+encodeURIComponent(post.id);
+            const row=element("li"),link=element("a",post.title);link.href=window.PortfolioCloud?.enabled ? window.PortfolioCloud.url("blog-article.html?id="+encodeURIComponent(post.id)) : "blog-article.html?id="+encodeURIComponent(post.id);
             row.append(link,element("p",post.category+" · "+post.excerpt));
             const actions=element("div");actions.className="actions";
             actions.append(button("Խմբագրել հոդվածը",()=>{byId("post-id").value=post.id;byId("post-title").value=post.title;byId("post-category").value=post.category;byId("post-body").value=post.body;byId("post-title").focus();}),button("Հեռացնել ցանկից",()=>void run(()=>api("posts/"+post.id,"DELETE"),"Հոդվածը հեռացվել է բլոգի ցանկից։")));

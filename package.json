@@ -1,5 +1,15 @@
 {
-  "name": "armine-portfolio-checks", "private": true,
-  "scripts": { "test": "vitest run", "test:e2e": "playwright test", "preview": "node scripts/serve-preview.mjs" },
-  "devDependencies": { "@playwright/test": "latest", "vitest": "latest", "@axe-core/playwright": "latest" }
+  "name": "armine-portfolio-checks",
+  "private": true,
+  "scripts": {
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "preview": "node scripts/serve-preview.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "latest",
+    "@electric-sql/pglite": "^0.5.11",
+    "@playwright/test": "latest",
+    "vitest": "latest"
+  }
 }

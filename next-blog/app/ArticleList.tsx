@@ -7,12 +7,17 @@ import type { Post } from "../lib/posts";
 export default function ArticleList({ posts: initialPosts }: { posts: Post[] }) {
   const [posts,setPosts]=useState(initialPosts);
   const [localBackend,setLocalBackend]=useState(false);
+  const [cloudBackend,setCloudBackend]=useState(false);
+  const [cloudPreview,setCloudPreview]=useState(false);
   const [error,setError]=useState("");
   useEffect(()=>{
-    if(!document.querySelector('meta[name="portfolio-backend"]'))return;
+    const cloud=location.hostname==="armgasp205-create.github.io" || new URLSearchParams(location.search).get("cloud")==="1";
+    if(!cloud && !document.querySelector('meta[name="portfolio-backend"]'))return;
+    setCloudBackend(cloud);
+    setCloudPreview(new URLSearchParams(location.search).get("cloud")==="1");
     setLocalBackend(true);setPosts([]);
     const controller=new AbortController();
-    fetch("/api/posts",{signal:controller.signal,cache:"no-store"}).then(async response=>{if(!response.ok)throw new Error();return response.json();}).then(data=>setPosts(data.posts)).catch(()=>{if(!controller.signal.aborted)setError("Հոդվածները սերվերից բեռնել չհաջողվեց։ Թարմացրու էջը։");});
+    fetch(cloud ? "https://mmucgmsnlcfywypjokyw.supabase.co/rest/v1/portfolio_posts?select=*&deleted=eq.false&order=created_at.desc,id.desc" : "/api/posts",{headers:cloud ? {apikey:"sb_publishable_ROro5WJZJLiFSg15_VlTRg_M28oe0qG"} : undefined,signal:controller.signal,cache:"no-store"}).then(async response=>{if(!response.ok)throw new Error();return response.json();}).then(data=>setPosts(cloud ? data.map((row:{id:string;title:string;category:string;body:string})=>({...row,slug:row.id,excerpt:row.body.slice(0,150),minutes:Math.max(1,Math.ceil(row.body.length/900)),sections:[]})) : data.posts)).catch(()=>{if(!controller.signal.aborted)setError("Հոդվածները սերվերից բեռնել չհաջողվեց։ Թարմացրու էջը։");});
     return ()=>controller.abort();
   },[]);
   const [query, setQuery] = useState("");
@@ -20,7 +25,7 @@ export default function ArticleList({ posts: initialPosts }: { posts: Post[] }) 
   const categories = ["Բոլորը", ...new Set(posts.map(post => post.category))];
   const visible = posts.filter(post => (category === "Բոլորը" || post.category === category) && `${post.title} ${post.excerpt} ${post.category}`.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()));
   return <>
-    {localBackend && <p><a href="/backend-admin.html#posts">Կառավարել հոդվածները →</a></p>}
+    {localBackend && <p><a href={cloudBackend ? "../backend-admin.html#posts" : "/backend-admin.html#posts"}>Կառավարել հոդվածները →</a></p>}
     {error && <p role="alert">{error}</p>}
     <div className="article-tools">
       <label htmlFor="article-search">Որոնել հոդված<input id="article-search" type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Օրինակ՝ React" /></label>
@@ -32,7 +37,7 @@ export default function ArticleList({ posts: initialPosts }: { posts: Post[] }) 
       const index = posts.indexOf(post);
       return <article className="card" key={post.slug}>
         <div className={`art art-${index%3}`} aria-hidden="true">{["{ }", "↗", "N."][index%3]}</div>
-        <div className="card-body"><p className="meta">{post.category} · {post.minutes} րոպե</p><h3>{localBackend ? <a href={`/blog-article.html?id=${encodeURIComponent(post.slug)}`}>{post.title}</a> : <Link href={`/posts/${post.slug}/`}>{post.title}</Link>}</h3><p>{post.excerpt}</p>{localBackend ? <a className="read" href={`/blog-article.html?id=${encodeURIComponent(post.slug)}`}>Կարդալ հոդվածը ↗</a> : <Link className="read" href={`/posts/${post.slug}/`}>Կարդալ հոդվածը <span aria-hidden="true">↗</span></Link>}</div>
+        <div className="card-body"><p className="meta">{post.category} · {post.minutes} րոպե</p><h3>{localBackend ? <a href={`${cloudBackend ? ".." : ""}/blog-article.html?id=${encodeURIComponent(post.slug)}${cloudPreview ? "&cloud=1" : ""}`}>{post.title}</a> : <Link href={`/posts/${post.slug}/`}>{post.title}</Link>}</h3><p>{post.excerpt}</p>{localBackend ? <a className="read" href={`${cloudBackend ? ".." : ""}/blog-article.html?id=${encodeURIComponent(post.slug)}${cloudPreview ? "&cloud=1" : ""}`}>Կարդալ հոդվածը ↗</a> : <Link className="read" href={`/posts/${post.slug}/`}>Կարդալ հոդվածը <span aria-hidden="true">↗</span></Link>}</div>
       </article>;
     })}</div>
   </>;

@@ -1,14 +1,20 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    const localBackend=Boolean(document.querySelector('meta[name="portfolio-backend"]'));
+    const localBackend=Boolean(window.PortfolioCloud?.enabled) || Boolean(document.querySelector('meta[name="portfolio-backend"]'));
     const products = [{name: "Nova Headphones", price: 89}, {name: "Smart Watch X", price: 129}, {name: "Urban Backpack", price: 64}, {name: "Classic Sneakers", price: 95}];
     const today = new Date(); today.setHours(12, 0, 0, 0);
     const orders = [];
     if(localBackend) {
         try {
-            const response=await fetch("/api/orders",{signal:AbortSignal.timeout(10000)});
+            const response=window.PortfolioCloud?.enabled ? {ok:true,json:()=>window.PortfolioCloud.request("orders")} : await fetch("/api/orders",{signal:AbortSignal.timeout(10000)});
             if(!response.ok)throw new Error();
             const data=await response.json();orders.push(...data.orders.map(order=>({...order,date:new Date(order.date)})));
-        } catch {document.getElementById("dashboard-period-status").textContent="Պատվերները սերվերից բեռնել չհաջողվեց։ Թարմացրու էջը։";return;}
+        } catch {
+            document.getElementById("dashboard-period-status").textContent="Պատվերները տեսնելու համար մուտք գործիր ադմինի հաշվով։ Եթե արդեն մուտք ես գործել, ստուգիր կապը։";
+            document.querySelectorAll(".stat-card h2").forEach(node=>node.textContent="—");
+            document.querySelectorAll(".bar").forEach(node=>node.style.height="0%");
+            const table=document.querySelector("tbody");if(table)table.replaceChildren();
+            const link=document.createElement("a");link.href=window.PortfolioCloud?.url("react-planner/#/account") || "/react-planner/#/account";link.textContent="Բացել իմ հաշիվը →";document.getElementById("dashboard-period-status").after(link);return;
+        }
     }
     for (let day = 0; !localBackend && day < 90; day++) {
         for (let i = 0; i < 2 + day % 4; i++) {
@@ -96,7 +102,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         async function refreshOrders(){
             if(refreshing||document.hidden)return;refreshing=true;
             try{
-                const response=await fetch("/api/orders",{cache:"no-store",signal:AbortSignal.timeout(10000)});if(!response.ok)throw new Error();
+                const response=window.PortfolioCloud?.enabled ? {ok:true,json:()=>window.PortfolioCloud.request("orders")} : await fetch("/api/orders",{cache:"no-store",signal:AbortSignal.timeout(10000)});if(!response.ok)throw new Error();
                 const data=await response.json();orders.splice(0,orders.length,...data.orders.map(order=>({...order,date:new Date(order.date)})));renderPeriod();
             }catch{document.getElementById("dashboard-period-status").textContent="Տվյալները թարմացնել չհաջողվեց։ Կապը վերականգնելուց հետո կփորձենք կրկին։";}finally{refreshing=false;}
         }

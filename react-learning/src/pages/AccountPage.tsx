@@ -74,7 +74,7 @@ export default function AccountPage() {
   return <section><h1>Իմ հաշիվը</h1>
     {loading ? <p role="status">Ստուգում ենք մուտքը…</p> : session ? <>
       <p>Մուտք ես գործել՝ <strong>{session.user.email}</strong></p>
-      <p><a href="#/backend">Բացել առցանց առաջադրանքները →</a></p>
+      <p>{!document.querySelector('meta[name="portfolio-backend"]') && <><a href="../backend-admin.html">Կառավարում</a> ? </>}<a href="#/backend">Բացել առցանց առաջադրանքները →</a></p>
       {document.querySelector('meta[name="portfolio-backend"]') && <p><a href="#/backend">Իմ սերվերային առաջադրանքները</a> · <a href="/backend-admin.html" onClick={async event => {
         event.preventDefault(); setError("");
         try {
